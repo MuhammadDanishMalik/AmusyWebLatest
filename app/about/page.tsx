@@ -10,41 +10,18 @@ export default function AboutPage() {
     <div style={{background:'#FAFAF8', minHeight:'100vh'}}>
       <Navbar activePage="About"/>
 
-      {/* ── TOP BANNER — "about?" Amusy branding image ── */}
+      {/* ── TOP BANNER — About Us hero image ── */}
       <div style={{
-        paddingTop: 90,
-        background: 'linear-gradient(160deg, #fff5f9 0%, #fff0f5 40%, #fce8f3 100%)',
+        paddingTop: 72,
         position: 'relative', overflow: 'hidden',
-        borderBottom: '1px solid rgba(255,135,196,0.12)',
       }}>
-        {/* Watermark pattern */}
-        <div style={{
-          position:'absolute', inset:0, opacity:0.07,
-          backgroundImage:`url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><text y='50' x='5' font-size='40' fill='%23ff87c4'>🕹</text><text y='95' x='55' font-size='35' fill='%23ff87c4'>🌸</text></svg>")`,
-          backgroundSize: '100px 100px',
-          pointerEvents: 'none',
-        }}/>
-        <div style={{position:'relative', zIndex:1, textAlign:'center', padding:'32px 20px 48px'}}>
-          {/* "about?" label in pink bubbly style */}
-          <div style={{
-            display:'inline-flex', alignItems:'center', justifyContent:'center',
-            background:'rgba(255,135,196,0.15)', border:'2px solid rgba(255,135,196,0.3)',
-            borderRadius:100, padding:'8px 24px', marginBottom:18,
-          }}>
-            <span style={{
-              ...P, fontSize:22, fontWeight:800, color:'#ff87c4',
-              letterSpacing:'0.05em',
-            }}>about? 🌸</span>
-          </div>
-          {/* Amusy logo */}
-          <div style={{display:'flex', justifyContent:'center', marginBottom:8}}>
-            <img src="/images/amusy-logo.png" alt="Amusy"
-              style={{height:60, objectFit:'contain', display:'block'}}/>
-          </div>
-          <p style={{...P, fontSize:16, color:'#ff87c4', fontWeight:700, letterSpacing:'0.06em'}}>
-            Japanese Claw Machines
-          </p>
-        </div>
+        <img src="/images/banner-main.png" alt="Amusy — About Us"
+          style={{
+            width: '100%',
+            maxHeight: 420,
+            objectFit: 'cover',
+            display: 'block',
+          }}/>
       </div>
 
       <main style={{maxWidth:800, margin:'0 auto', padding:'56px clamp(20px,4vw,48px) 80px'}}>

@@ -39,31 +39,11 @@ const ALL_PRIZES = [
   '/images/prize-10.png','/images/prize-11.png',
 ];
 
-const PRIZE_TABS = [
-  { tab:'All',        items:['/images/prize-1.png','/images/prize-4.png','/images/prize-7.png','/images/prize-5.png','/images/prize-6.png','/images/prize-9.png','/images/prize-10.png','/images/prize-11.png'], labels:['Cardcaptor Sakura','My Melody & Kuromi','Kirby Series','Sanrio Series','Sanrio Keychains','Sonny Angel','Classic Tartan Bear','Kirby Charms'] },
-  { tab:'Sanrio',     items:['/images/prize-4.png','/images/prize-5.png','/images/prize-6.png'], labels:['My Melody & Kuromi','Sanrio Series','Sanrio Keychains'] },
-  { tab:'Anime',      items:['/images/prize-1.png','/images/prize-7.png','/images/prize-11.png'], labels:['Cardcaptor Sakura','Kirby Series','Kirby Charms'] },
-  { tab:'Collectibles',items:['/images/prize-9.png','/images/prize-10.png'], labels:['Sonny Angel','Classic Tartan Bear'] },
-];
-
 const VIDEOS = [
   { src:'https://res.cloudinary.com/dtp8nm0ai/video/upload/q_auto/f_auto/v1777470818/WhatsApp_Video_2026-04-29_at_18.50.11_nzk3wx.mp4', poster: 'https://res.cloudinary.com/dtp8nm0ai/video/upload/q_auto/f_auto/so_0/v1777470818/WhatsApp_Video_2026-04-29_at_18.50.11_nzk3wx.jpg', label:'Guest Review' },
   { src:'https://res.cloudinary.com/dtp8nm0ai/video/upload/q_auto/f_auto/v1777470818/WhatsApp_Video_2026-04-29_at_18.49.57_skebfo.mp4', poster: 'https://res.cloudinary.com/dtp8nm0ai/video/upload/q_auto/f_auto/so_2.5/v1777470818/WhatsApp_Video_2026-04-29_at_18.49.57_skebfo.jpg', label:'New setup!' },
   { src:'https://res.cloudinary.com/dtp8nm0ai/video/upload/q_auto/f_auto/v1777470817/WhatsApp_Video_2026-04-29_at_18.50.01_pvasz7.mp4', poster: 'https://res.cloudinary.com/dtp8nm0ai/video/upload/q_auto/f_auto/so_0/v1777470817/WhatsApp_Video_2026-04-29_at_18.50.01_pvasz7.jpg', label:'New prizes' },
   { src:'https://res.cloudinary.com/dtp8nm0ai/video/upload/q_auto/f_auto/v1777470817/WhatsApp_Video_2026-04-29_at_18.50.06_qprom0.mp4', poster: 'https://res.cloudinary.com/dtp8nm0ai/video/upload/q_auto/f_auto/so_0/v1777470817/WhatsApp_Video_2026-04-29_at_18.50.06_qprom0.jpg', label:'Sakuracon 2026' },
-];
-
-const IG_POSTS = [
-  {tag:'Cardcaptor Sakura',loc:'Seattle, WA',img:'/images/prize-1.png'},
-  {tag:'Kero Plush Series',loc:'Bellevue, WA',img:'/images/prize-2.png'},
-  {tag:'My Melody × Kuromi',loc:'Redmond, WA',img:'/images/prize-4.png'},
-  {tag:'Kirby at Amusy',loc:'Seattle, WA',img:'/images/prize-7.png'},
-  {tag:'Sanrio Collection',loc:'Kirkland, WA',img:'/images/prize-6.png'},
-  {tag:'Classic Tartan Bear',loc:'Renton, WA',img:'/images/prize-10.png'},
-  {tag:'Sonny Angel Series',loc:'Seattle, WA',img:'/images/prize-9.png'},
-  {tag:'Play Until You Win',loc:'ECCC 2024',img:'/images/event-5.png'},
-  {tag:'Convention Booth',loc:'ECCC 2024',img:'/images/event-2.png'},
-  {tag:'Prize Closeup',loc:'Seattle, WA',img:'/images/prize-5.png'},
 ];
 
 /* ─── FAQ FLOATING ICONS ─── */
@@ -571,15 +551,15 @@ const HERO_CARDS = [
 const HERO_TOYS = [
   { icon:'🕹️', x:8,  y:20, size:28 },
   { icon:'🧸', x:88, y:15, size:22 },
-  { icon:'🌸', x:4,  y:65, size:24 },
+  { icon:'🐾', x:4,  y:65, size:24 },
   { icon:'✨', x:92, y:55, size:26 },
-  { icon:'🎏', x:15, y:80, size:20 },
+  { icon:'🎀', x:15, y:80, size:20 },
   { icon:'❤️', x:82, y:78, size:26 },
   { icon:'🕹️', x:50, y:10, size:18 },
   { icon:'🧸', x:72, y:25, size:22 },
-  { icon:'🌸', x:25, y:45, size:20 },
+  { icon:'🐾', x:25, y:45, size:20 },
   { icon:'✨', x:60, y:82, size:24 },
-  { icon:'🎏', x:38, y:15, size:20 },
+  { icon:'🎀', x:38, y:15, size:20 },
   { icon:'❤️', x:95, y:38, size:18 },
 ];
 
@@ -749,15 +729,11 @@ export default function Home() {
   const [revKey, setRevKey] = useState(0);
 
   const [faqOpen, setFaqOpen] = useState<number|null>(null);
-  const [popup, setPopup] = useState(false);
-  const [popupDone, setPopupDone] = useState(false);
+
 
   useMagnetic(); useReveal();
 
-  useEffect(() => {
-    const t = setTimeout(() => { if (!popupDone) setPopup(true); }, 7000);
-    return () => clearTimeout(t);
-  }, [popupDone]);
+
 
   const go = useCallback((id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior:'smooth' });
@@ -770,7 +746,7 @@ export default function Home() {
   const faqs = FAQ_EN;
   const td = TAB_DATA[revTab];
 
-  const igPosts = [...IG_POSTS,...IG_POSTS];
+
 
   return (
     <>
@@ -823,7 +799,7 @@ export default function Home() {
 
             <div className="blur-in bi6" style={{ display: 'flex', flexWrap: 'wrap', gap: 20, justifyContent: 'center', marginBottom: 56 }}>
               {['ZERO cost to partners', 'Additional Revenue for your store', '80+ locations'].map(t => (
-                <span key={t} style={{ fontSize: 13.5, color: 'var(--ink3)', display: 'flex', alignItems: 'center', gap: 5, ...P }}>
+                <span key={t} style={{ fontSize: 15, color: 'var(--ink3)', display: 'flex', alignItems: 'center', gap: 5, ...P }}>
                   <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--pink)', display: 'block' }} />
                   {t}
                 </span>
