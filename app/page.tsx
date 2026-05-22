@@ -4,14 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Wrench, HandCoins } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import { useLang } from './context/LangContext';
+
 
 /* ─── DATA ─── */
 const TAB_DATA = [
-  { tab:'Restaurant', tabJa:'レストラン', headline:'Keep diners entertained, longer.', body:"Guests waiting for tables or finishing meals spend time at the machine. Average table turn time stays the same — but customers leave happier and spend more.", imgs:['/images/event-3.png', '/images/event-5.png'], note:'Ideal for : Casual dining, Dessert shops, Boba Tea Shops, Food courts, Bars' },
-  { tab:'Retail Store', tabJa:'小売店', headline:'Drive foot traffic and repeat visits.', body:"Customers return to your store specifically to try the machine — and they browse while they're there. The machine pays for itself and then some.", imgs:['/images/event-2.png', '/images/event-4.png'], note:'Ideal for : gift shops, hobby stores, anime stores' },
-  { tab:'Shopping Mall', tabJa:'ショッピングモール', headline:'Activate unused floor space.', body:'Empty corners and transition areas become revenue-generating attractions. Our machines are compact, striking, and maintained at our expense.', imgs:['/images/event-1.png', '/images/event-3.png'], note:'Ideal for : market entrances, foodcourt area, hallways' },
-  { tab:'Market', tabJa:'マーケット', headline:'Bring excitement to high-traffic spaces.', body:'Markets and food halls attract crowds looking for something new. Our machines create a natural gathering point — customers linger longer and spend more.', imgs:['/images/event-4.png', '/images/event-2.png'], note:'Ideal for : market entrances, foodcourt area, hallways' },
+  { tab:'Restaurant', headline:'Keep diners entertained, longer.', body:"Guests waiting for tables or finishing meals spend time at the machine. Average table turn time stays the same — but customers leave happier and spend more.", imgs:['/images/event-3.png', '/images/event-5.png'], note:'Ideal for : Casual dining, Dessert shops, Boba Tea Shops, Food courts, Bars' },
+  { tab:'Retail Store', headline:'Drive foot traffic and repeat visits.', body:"Customers return to your store specifically to try the machine — and they browse while they're there. The machine pays for itself and then some.", imgs:['/images/event-2.png', '/images/event-4.png'], note:'Ideal for : gift shops, hobby stores, anime stores' },
+  { tab:'Shopping Mall', headline:'Activate unused floor space.', body:'Empty corners and transition areas become revenue-generating attractions. Our machines are compact, striking, and maintained at our expense.', imgs:['/images/event-1.png', '/images/event-3.png'], note:'Ideal for : market entrances, foodcourt area, hallways' },
+  { tab:'Market', headline:'Bring excitement to high-traffic spaces.', body:'Markets and food halls attract crowds looking for something new. Our machines create a natural gathering point — customers linger longer and spend more.', imgs:['/images/event-4.png', '/images/event-2.png'], note:'Ideal for : market entrances, foodcourt area, hallways' },
 ];
 
 const MACHINES = [
@@ -30,14 +30,7 @@ const FAQ_EN = [
   { q:'How do I know the machines are fair?', a:'We pride ourselves in providing claw machines that are actually winnable with high quality prizes. We are fully transparent that most of our machines do take more than one play to win, and skill. We are also flexible in allowing play until you win settings on most of our machines!' },
   { q:'What happens if there is a machine issue?', a:'We take care of all servicing, maintenance, and repairs, so you never have to deal with machine issues or operational downtime.' },
 ];
-const FAQ_JA = [
-  { q:'機械の設置は本当に無料ですか？', a:'はい、100%無料です。Amusyは機械のコスト、設置、景品、メンテナンス、補充をすべてカバーします。必要なのはフロアスペース、wifi、コンセントのみです。' },
-  { q:'必要なスペースはどれくらいですか？', a:'最小のChibi機械は2×2フィートのスペースで設置できます。大型のスタッカブルユニットは5〜10フィートが必要です。' },
-  { q:'景品の補充はどのくらいの頻度ですか？', a:'場所の人気によって週1回〜月1回の頻度で確認・補充します。新しい景品は毎月ローテーションされます。' },
-  { q:'収益シェアはどのくらいですか？', a:'月間総コミッションのパーセンテージをご提供します。金額は集客数と店舗タイプによって異なります。月額固定も可能です。' },
-  { q:'許可証やライセンスは必要ですか？', a:'はい、Amusyがすべての許可を取得します。WA州ではワシントン州ギャンブル委員会が発行したマスターライセンスを保有しています。' },
-  { q:'機械は公正ですか？', a:'当社は本当に獲得できる機械を提供することを誇りとしています。ほとんどの機械は「プレイ・アンティル・ユー・ウィン」を提供しています。' },
-];
+
 
 const ALL_PRIZES = [
   '/images/prize-1.png','/images/prize-2.png','/images/prize-3.png',
@@ -105,7 +98,7 @@ const MACHINE_TILTS = [-6, -2, 2, 6];
 // Y-offsets: outer cards drop slightly for natural fan
 const MACHINE_Y = [18, 8, 8, 18];
 
-function MachineFan({ machines, jp }: { machines: typeof MACHINES; jp: boolean }) {
+function MachineFan({ machines }: { machines: typeof MACHINES }) {
   const [hovered, setHovered] = useState<number | null>(null);
   const [selected, setSelected] = useState(0);
 
@@ -195,7 +188,7 @@ function MachineFan({ machines, jp }: { machines: typeof MACHINES; jp: boolean }
                 fontSize: 9.5, fontWeight: 700, letterSpacing: '0.1em',
                 textTransform: 'uppercase', fontFamily:"'Montserrat',sans-serif",
               }}>
-                {jp ? `0${i + 1}` : `0${i + 1}`}
+                {`0${i + 1}`}
               </div>
             </motion.div>
           );
@@ -267,7 +260,7 @@ function MachineFan({ machines, jp }: { machines: typeof MACHINES; jp: boolean }
                 style={{ padding: '12px 40px', fontSize: 14 }}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <span style={{ position: 'relative', zIndex: 1 }}>{jp ? '無料で試す →' : 'Try it free →'}</span>
+                <span style={{ position: 'relative', zIndex: 1 }}>Try it free →</span>
               </button>
             </div>
           </div>
@@ -648,7 +641,7 @@ function HeroFloatingToys() {
   );
 }
 
-function HeroMachineStack({ machines, jp }: { machines: typeof MACHINES; jp: boolean }) {
+function HeroMachineStack({ machines }: { machines: typeof MACHINES }) {
   const [hov, setHov] = useState<number | null>(null);
 
   return (
@@ -752,7 +745,6 @@ function HeroMachineStack({ machines, jp }: { machines: typeof MACHINES; jp: boo
    PAGE
 ════════════════════════════════════════════════════════════ */
 export default function Home() {
-  const { lang, jp } = useLang();
   const [revTab, setRevTab] = useState(0);
   const [revKey, setRevKey] = useState(0);
 
@@ -775,7 +767,7 @@ export default function Home() {
 
 
   const P = { fontFamily:"'Montserrat',sans-serif" };
-  const faqs = jp ? FAQ_JA : FAQ_EN;
+  const faqs = FAQ_EN;
   const td = TAB_DATA[revTab];
 
   const igPosts = [...IG_POSTS,...IG_POSTS];
@@ -804,35 +796,33 @@ export default function Home() {
             {/* ── Centered text ── */}
             <div className="blur-in bi1" style={{ marginBottom: 8 }}>
               <div className="lbl" style={{ justifyContent: 'center' }}>
-                {jp ? '日本製クローマシン設置サービス' : 'Japanese Claw Machine Placement'}
+                Japanese Claw Machine Placement
               </div>
             </div>
 
             <h1 className="h1" style={{ marginBottom: 20 }}>
               <span className="blur-in bi2" style={{ display: 'block' }}>
-                {jp ? 'エンターテインメントを追加。' : 'Elevate Your Business with Us! Add Entertainment.'}
+                Elevate Your Business with Us! Add Entertainment.
               </span>
               <span className="blur-in bi3 italic-pink" style={{ display: 'block' }}>
-                {jp ? '収益を' : 'Earn '}
-                <BrushHighlight>{jp ? '得る。' : 'Revenue.'}</BrushHighlight>
+                {'Earn '}
+                <BrushHighlight>Revenue.</BrushHighlight>
               </span>
             </h1>
 
             <p className="blur-in bi4" style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--ink2)', maxWidth: 520, margin: '0 auto 32px', ...P }}>
-              {jp
-                ? 'プレミアム日本製クローマシンをあなたの店舗に設置します。費用ゼロで、毎月の利益シェアを受け取りながら、すべてをお任せいただけます。'
-                : 'We partner with businesses by transforming their empty spaces with our fun & lively claw machine setups!~'}
+              We partner with businesses by transforming their empty spaces with our fun &amp; lively claw machine setups!~
             </p>
 
             <div className="blur-in bi5" style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center', marginBottom: 16 }}>
               <button className="btn btn-dark" onClick={() => go('contact')}>
-                <span style={{ position: 'relative', zIndex: 1 }}>{jp ? 'パートナーになる →' : 'Become a Partner →'}</span>
+                <span style={{ position: 'relative', zIndex: 1 }}>Become a Partner →</span>
               </button>
-              <BtnOutline onClick={() => go('revenue')}>{jp ? '詳しく見る' : 'Learn More'}</BtnOutline>
+              <BtnOutline onClick={() => go('revenue')}>Learn More</BtnOutline>
             </div>
 
             <div className="blur-in bi6" style={{ display: 'flex', flexWrap: 'wrap', gap: 20, justifyContent: 'center', marginBottom: 56 }}>
-              {(jp ? ['パートナー費用ゼロ', 'WA州認可', '50以上の設置場所'] : ['ZERO cost to partners', 'Additional Revenue for your store', '80+ locations']).map(t => (
+              {['ZERO cost to partners', 'Additional Revenue for your store', '80+ locations'].map(t => (
                 <span key={t} style={{ fontSize: 13.5, color: 'var(--ink3)', display: 'flex', alignItems: 'center', gap: 5, ...P }}>
                   <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--pink)', display: 'block' }} />
                   {t}
@@ -901,10 +891,10 @@ export default function Home() {
           <div className="container" style={{ marginBottom: 36 }}>
             <div className="reveal" style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
               <div>
-                <div className="lbl" style={{ marginBottom:14 }}>{jp ? 'Instagram' : 'Check out our Instagram'}</div>
-                <h2 className="h2">{jp ? 'リアルな体験をご覧ください。' : <><BrushHighlight>Watch us</BrushHighlight> in action!</>}</h2>
+                <div className="lbl" style={{ marginBottom:14 }}>Check out our Instagram</div>
+                <h2 className="h2"><><BrushHighlight>Watch us</BrushHighlight> in action!</></h2>
                 <p style={{ marginTop:10, fontSize:14, color:'var(--ink2)', fontFamily:"'Montserrat',sans-serif" }}>
-                  {jp ? 'ホバーで音声を再生します。' : 'Hover any video for sound — audio fades in and out smoothly.'}
+                  Hover any video for sound — audio fades in and out smoothly.
                 </p>
               </div>
               <a href="https://www.instagram.com/amusy_entertainment/" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
@@ -949,18 +939,18 @@ export default function Home() {
         <section id="revenue" className="section">
           <div className="container">
             <div className="reveal" style={{maxWidth:580,marginBottom:44}}>
-              <div className="lbl" style={{marginBottom:14}}>{jp?'提携する理由':'Why Partner With Us'}</div>
+              <div className="lbl" style={{marginBottom:14}}>Why Partner With Us</div>
               <ScribbleDeco />
               <h2 className="h2" style={{marginBottom:12}}>
-                {jp ? 'あなたには何の費用も' : 'Entertainment & new revenue stream that '}
-                <BrushHighlight>{jp ? 'かからない収益源。' : 'costs your store $0.'}</BrushHighlight>
+                {'Entertainment & new revenue stream that '}
+                <BrushHighlight>costs your store $0.</BrushHighlight>
               </h2>
-              <p style={{fontSize:14.5,color:'var(--ink2)',lineHeight:1.75,...P}}>{jp?'店舗の種類を選択してください。':'Pick your store type to see how Amusy fits your business.'}</p>
+              <p style={{fontSize:14.5,color:'var(--ink2)',lineHeight:1.75,...P}}>Pick your store type to see how Amusy fits your business.</p>
             </div>
             <div className="reveal d1" style={{marginBottom:36}}>
               <div className="tab-bar">
                 {TAB_DATA.map((t,i)=>(
-                  <button key={i} className={`tab-btn ${revTab===i?'active':''}`} onClick={()=>switchRevTab(i)}>{jp?t.tabJa:t.tab}</button>
+                  <button key={i} className={`tab-btn ${revTab===i?'active':''}`} onClick={()=>switchRevTab(i)}>{t.tab}</button>
                 ))}
               </div>
             </div>
@@ -972,7 +962,7 @@ export default function Home() {
                 <p style={{fontSize:14.5,color:'var(--ink2)',lineHeight:1.8,marginBottom:18,...P}}>{td.body}</p>
                 <p style={{fontSize:12,color:'var(--ink3)',fontStyle:'italic',marginBottom:26,...P}}>{td.note}</p>
                 <button className="btn btn-dark" onClick={()=>go('contact')}>
-                  <span style={{position:'relative',zIndex:1}}>{jp?'お問い合わせ →':'Get In Touch →'}</span>
+                  <span style={{position:'relative',zIndex:1}}>Get In Touch →</span>
                 </button>
               </div>
               <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
@@ -991,17 +981,15 @@ export default function Home() {
         <section id="how" className="section" style={{background:'var(--bg2)'}}>
           <div className="container">
             <div className="reveal" style={{marginBottom:60}}>
-              <div className="lbl" style={{marginBottom:14}}>{jp?'プロセス':'How It works'}</div>
+              <div className="lbl" style={{marginBottom:14}}>How It works</div>
               <ScribbleDeco />
-              <h2 className="h2">{jp?'不労所得への3ステップ。':<>Three steps to <BrushHighlight>passive income.</BrushHighlight></>}</h2>
+              <h2 className="h2"><>Three steps to <BrushHighlight>passive income.</BrushHighlight></></h2>
             </div>
 
             {/* Steps — proper responsive layout */}
             <div className="steps-row">
-              {(jp
-                ?[{num:'01',t:'お問い合わせ',b:'フォームでご連絡ください。24時間以内に返答します。',icon:<Mail size={24} color="var(--pink)" strokeWidth={2}/>},{num:'02',t:'設置',b:'配送・設置を完全無料で行います。業務への支障なし。',icon:<Wrench size={24} color="var(--pink)" strokeWidth={2}/>},{num:'03',t:'収益を受け取る',b:'毎月の収益シェアを受け取りながら、メンテナンスはお任せ。',icon:<HandCoins size={24} color="var(--pink)" strokeWidth={2}/>}]
-                :[{num:'01',t:'Contact Us',b:"Contact us through the form on our web, email, or through our socials. We'll respond & help assess your space to determine which setup works best.",icon:<Mail size={24} color="var(--pink)" strokeWidth={2}/>},{num:'02',t:'We Install',b:'Our team handles installation, setup, ongoing maintenance, and refills. We take care of it all, zero cost & zero disruption.',icon:<Wrench size={24} color="var(--pink)" strokeWidth={2}/>},{num:'03',t:'Collect Revenue',b:'Receive your monthly revenue share while we handle everything for you, completely hassle-free!',icon:<HandCoins size={24} color="var(--pink)" strokeWidth={2}/>}]
-              ).map((s,i)=>(
+              {[{num:'01',t:'Contact Us',b:"Contact us through the form on our web, email, or through our socials. We'll respond & help assess your space to determine which setup works best.",icon:<Mail size={24} color="var(--pink)" strokeWidth={2}/>},{num:'02',t:'We Install',b:'Our team handles installation, setup, ongoing maintenance, and refills. We take care of it all, zero cost & zero disruption.',icon:<Wrench size={24} color="var(--pink)" strokeWidth={2}/>},{num:'03',t:'Collect Revenue',b:'Receive your monthly revenue share while we handle everything for you, completely hassle-free!',icon:<HandCoins size={24} color="var(--pink)" strokeWidth={2}/>}]
+              .map((s,i)=>(
                 <React.Fragment key={s.num}>
                   <div className={`reveal d${i+1}`} style={{position:'relative',paddingTop:12}}>
                     <div style={{...P,fontSize:72,fontWeight:800,lineHeight:1,letterSpacing:'-0.04em',color:'rgba(0,0,0,0.05)',position:'absolute',top:-8,left:-4,userSelect:'none'}}>{s.num}</div>
@@ -1022,15 +1010,15 @@ export default function Home() {
         <section id="machines" className="section" style={{ background: 'var(--bg)' }}>
           <div className="container">
             <div className="reveal" style={{ maxWidth: 580, marginBottom: 56 }}>
-              <div className="lbl" style={{ marginBottom: 14 }}>{jp ? '機械の種類' : 'Machine Types'}</div>
+              <div className="lbl" style={{ marginBottom: 14 }}>Machine Types</div>
               <h2 className="h2" style={{ marginBottom: 12 }}>
-                {jp ? 'あなたの店舗に合った機械を。' : <>Choose the machine<br/>that <BrushHighlight>fits your space.</BrushHighlight></>}
+                {<>Choose the machine<br/>that <BrushHighlight>fits your space.</BrushHighlight></>}
               </h2>
               <p style={{ fontSize: 14.5, color: 'var(--ink2)', lineHeight: 1.75, fontFamily: "'Montserrat',sans-serif" }}>
-                {jp ? 'すべて設置・メンテナンス無料。ホバーして確認。' : 'All installed and maintained at no cost. Hover each card to explore.'}
+                All installed and maintained at no cost. Hover each card to explore.
               </p>
             </div>
-            <MachineFan machines={MACHINES} jp={jp} />
+            <MachineFan machines={MACHINES} />
           </div>
         </section>
 
@@ -1038,11 +1026,11 @@ export default function Home() {
         <section id="prizes" className="section" style={{background:'var(--bg2)'}}>
           <div className="container">
             <div className="reveal" style={{marginBottom:40}}>
-              <div className="lbl" style={{marginBottom:14}}>{jp?'景品':"What's Inside"}</div>
+              <div className="lbl" style={{marginBottom:14}}>What&apos;s Inside</div>
               <ScribbleDeco />
-              <h2 className="h2">{jp?'日本から直送のプレミアム景品。':<>Premium prizes <BrushHighlight>straight from Japan.</BrushHighlight></>}</h2>
+              <h2 className="h2"><>Premium prizes <BrushHighlight>straight from Japan.</BrushHighlight></></h2>
               <p style={{marginTop:12,fontSize:15,color:'var(--ink2)',maxWidth:560,...P}}>
-                {jp?'本物のライセンス商品 — 定期的に補充。':'Authentic branded & licensed merchandise rotated monthly. Your customers always have a new reason to visit!'}
+                Authentic branded &amp; licensed merchandise rotated monthly. Your customers always have a new reason to visit!
               </p>
             </div>
             <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:14}} className="grid-4 reveal d1">
@@ -1078,10 +1066,10 @@ export default function Home() {
                 fontWeight: 700, lineHeight: 1.1,
                 letterSpacing: '-0.025em', color: 'var(--ink)',
               }}>
-                {jp ? 'よくある質問。' : <>Let's clear a few <BrushHighlight>things up</BrushHighlight></>}
+                {<>Let&apos;s clear a few <BrushHighlight>things up</BrushHighlight></>}
               </h2>
               <p style={{ marginTop: 14, fontSize: 15, color: 'var(--ink3)', fontFamily: "'Montserrat',sans-serif" }}>
-                {jp ? 'ご不明な点はメールでお問い合わせください。' : 'If you have any other questions, please email us.'}
+                If you have any other questions, please email us.
               </p>
             </motion.div>
 
@@ -1171,7 +1159,7 @@ export default function Home() {
               style={{ textAlign: 'center', marginTop: 36 }}
             >
               <BtnOutline onClick={() => go('contact')}>
-                {jp ? 'メールでお問い合わせ' : 'Email us a question'}
+                Email us a question
               </BtnOutline>
             </motion.div>
           </div>
@@ -1183,26 +1171,26 @@ export default function Home() {
         <section id="contact" className="section">
           <div className="container" style={{maxWidth:600,margin:'0 auto'}}>
             <div className="reveal" style={{marginBottom:40}}>
-              <div className="lbl" style={{marginBottom:14}}>{jp?'お問い合わせ':'Contact'}</div>
-              <h2 className="h2">{jp?'お話しましょう。':<><ScribbleDeco width={48} />{"Let's talk."}</>}</h2>
+              <div className="lbl" style={{marginBottom:14}}>Contact</div>
+              <h2 className="h2"><><ScribbleDeco width={48} />{"Let's talk."}</></h2>
             </div>
             <div className="reveal d1" style={{background:'#fff',border:'1px solid var(--border)',borderRadius:22,padding:'clamp(22px,4vw,42px)',boxShadow:'var(--sh-sm)'}}>
               <form onSubmit={e=>e.preventDefault()} style={{display:'flex',flexDirection:'column',gap:13}} noValidate>
-                {[{type:'text',ph:jp?'お名前':'Your name'},{type:'text',ph:jp?'店舗名':'Business name'},{type:'email',ph:jp?'メールアドレス':'Email address'},{type:'tel',ph:jp?'電話番号':'Phone number'},{type:'text',ph:jp?'店舗住所':'Business address'}].map((f,i)=>(
+                {[{type:'text',ph:'Your name'},{type:'text',ph:'Business name'},{type:'email',ph:'Email address'},{type:'tel',ph:'Phone number'},{type:'text',ph:'Business address'}].map((f,i)=>(
                   <input key={i} type={f.type} placeholder={f.ph} style={{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 15px',fontSize:13.5,color:'var(--ink)',outline:'none',width:'100%',...P,transition:'border-color 0.2s'}}
                     onFocus={e=>e.currentTarget.style.borderColor='var(--pink)'}
                     onBlur={e=>e.currentTarget.style.borderColor='var(--border)'}
                   />
                 ))}
-                <textarea placeholder={jp?'スペースについて教えてください...':'Tell us about your space...'} rows={4} style={{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 15px',fontSize:13.5,color:'var(--ink)',outline:'none',width:'100%',resize:'vertical',...P,transition:'border-color 0.2s'}}
+                <textarea placeholder={'Tell us about your space...'} rows={4} style={{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 15px',fontSize:13.5,color:'var(--ink)',outline:'none',width:'100%',resize:'vertical',...P,transition:'border-color 0.2s'}}
                   onFocus={e=>e.currentTarget.style.borderColor='var(--pink)'}
                   onBlur={e=>e.currentTarget.style.borderColor='var(--border)'}
                 />
                 <button type="submit" className="btn btn-dark" style={{width:'100%',padding:'14px',fontSize:14}}>
-                  <span style={{position:'relative',zIndex:1}}>{jp?'送信 →':'Send Message →'}</span>
+                  <span style={{position:'relative',zIndex:1}}>Send Message →</span>
                 </button>
                 <p style={{textAlign:'center',fontSize:12,color:'var(--ink3)',...P}}>
-                  {jp?'または ':'Or email us at '}
+                  Or email us at 
                   <a href="mailto:info@amusyentertainment.com" style={{color:'var(--pink)',fontWeight:600}}>info@amusyentertainment.com</a>
                 </p>
               </form>
