@@ -47,6 +47,51 @@ body {
 @media (min-width: 768px) { .mob-only { display: none !important; } }
 @media (max-width: 767px) { .desk-only { display: none !important; } }
 
+/* ── LANGUAGE SWITCH — text-only blur flash ── */
+body.lang-switching h1,
+body.lang-switching h2,
+body.lang-switching h3,
+body.lang-switching h4,
+body.lang-switching h5,
+body.lang-switching p,
+body.lang-switching span:not(.verified):not(.btn-outline span),
+body.lang-switching li,
+body.lang-switching label,
+body.lang-switching a,
+body.lang-switching button {
+  filter: blur(7px);
+  opacity: 0.25;
+  transition: filter 0.16s ease, opacity 0.16s ease;
+}
+
+/* Smooth restore when class removed */
+body:not(.lang-switching) h1,
+body:not(.lang-switching) h2,
+body:not(.lang-switching) h3,
+body:not(.lang-switching) h4,
+body:not(.lang-switching) h5,
+body:not(.lang-switching) p,
+body:not(.lang-switching) span:not(.verified),
+body:not(.lang-switching) li,
+body:not(.lang-switching) label,
+body:not(.lang-switching) a,
+body:not(.lang-switching) button {
+  filter: blur(0px);
+  opacity: 1;
+  transition: filter 0.28s ease, opacity 0.28s ease;
+}
+
+/* ── HERO EMOJI FALL ── */
+@keyframes heroEmojiFall {
+  0%   { transform: translateY(-60px) translateX(0px)                     rotate(-12deg); opacity: 0; }
+  6%   { opacity: 0.62; }
+  30%  { transform: translateY(25vh)  translateX(var(--sway))              rotate(8deg); }
+  62%  { transform: translateY(55vh)  translateX(calc(var(--sway) * -0.5)) rotate(-6deg); }
+  88%  { transform: translateY(88vh)  translateX(0px)                     rotate(2deg); opacity: 0.62; }
+  96%  { opacity: 0; }
+  100% { transform: translateY(95vh)  translateX(0px)                     rotate(0deg); opacity: 0; }
+}
+
 /* ── BLUR-IN ── */
 @keyframes blurIn {
   0%   { filter: blur(16px); opacity: 0; transform: translateY(10px); }

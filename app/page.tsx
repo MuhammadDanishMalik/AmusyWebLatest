@@ -4,18 +4,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Wrench, HandCoins } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import { useLang } from './context/LangContext';
+import { t } from './translations';
 
 
 /* ─── DATA ─── */
 const TAB_DATA = [
-  { tab:'Restaurant', headline:'Keep diners entertained, longer.', body:"Guests waiting for tables or finishing meals spend time at the machine. Average table turn time stays the same — but customers leave happier and spend more.", imgs:['/images/event-3.png', '/images/event-5.png'], note:'Ideal for : Casual dining, Dessert shops, Boba Tea Shops, Food courts, Bars' },
-  { tab:'Retail Store', headline:'Drive foot traffic and repeat visits.', body:"Customers return to your store specifically to try the machine — and they browse while they're there. The machine pays for itself and then some.", imgs:['/images/event-2.png', '/images/event-4.png'], note:'Ideal for : gift shops, hobby stores, anime stores' },
-  { tab:'Shopping Mall', headline:'Activate unused floor space.', body:'Empty corners and transition areas become revenue-generating attractions. Our machines are compact, striking, and maintained at our expense.', imgs:['/images/event-1.png', '/images/event-3.png'], note:'Ideal for : market entrances, foodcourt area, hallways' },
-  { tab:'Market', headline:'Bring excitement to high-traffic spaces.', body:'Markets and food halls attract crowds looking for something new. Our machines create a natural gathering point — customers linger longer and spend more.', imgs:['/images/event-4.png', '/images/event-2.png'], note:'Ideal for : market entrances, foodcourt area, hallways' },
+  { tab:'Restaurant', headline:'Keep diners entertained, longer.', body:"Guests waiting for tables or finishing meals spend time at the machine. Average table turn time stays the same — but customers leave happier and spend more.", imgs:['/images/client/restaurant-1.jpg', '/images/client/restaurant-2.jpg'], note:'Ideal for : Casual dining, Dessert shops, Boba Tea Shops, Food courts, Bars' },
+  { tab:'Retail Store', headline:'Drive foot traffic and repeat visits.', body:"Customers return to your store specifically to try the machine — and they browse while they're there. The machine pays for itself and then some.", imgs:['/images/client/retail-1.jpg', '/images/client/retail-2.jpg'], note:'Ideal for : gift shops, hobby stores, anime stores' },
+  { tab:'Shopping Mall', headline:'Activate unused floor space.', body:'Empty corners and transition areas become revenue-generating attractions. Our machines are compact, striking, and maintained at our expense.', imgs:['/images/client/mall-1.jpg', '/images/client/mall-2.jpg'], note:'Ideal for : market entrances, foodcourt area, hallways' },
+  { tab:'Market', headline:'Bring excitement to high-traffic spaces.', body:'Markets and food halls attract crowds looking for something new. Our machines create a natural gathering point — customers linger longer and spend more.', imgs:['/images/client/market-1.jpg', '/images/client/mall-1.jpg'], note:'Ideal for : market entrances, foodcourt area, hallways' },
 ];
 
 const MACHINES = [
-  { key:'chibi', img:'/images/machine-chibi.png', name:'"Chibi" Machine', tag:'Best for small space', specs:[{k:'Width',v:'30cm  ·  1ft 1.7in'},{k:'Depth',v:'45cm  ·  1ft 1.5in'},{k:'Height',v:'156cm  ·  5ft 1in'},{k:'Power',v:'110v/220v, 40w'}], note:null },
+  { key:'chibi', img:'/images/machine-chibi.png', name:'Mini Machine', tag:'Best for small space', specs:[{k:'Width',v:'30cm  ·  1ft 1.7in'},{k:'Depth',v:'45cm  ·  1ft 1.5in'},{k:'Height',v:'156cm  ·  5ft 1in'},{k:'Power',v:'110v/220v, 40w'}], note:null },
   { key:'mid',   img:'/images/machine-mid.png',   name:'Mid Machine',     tag:'Best for normal space', specs:[{k:'Width',v:'35cm  ·  1ft 1.7in'},{k:'Depth',v:'35cm  ·  1ft 1.7in'},{k:'Height',v:'164cm  ·  5ft 4in'},{k:'Power',v:'110v/220v, 50w'}], note:null },
   { key:'stack', img:'/images/machine-stackable.png', name:'Stackable Machine', tag:'Best for mid-large space', specs:[{k:'Width',v:'60cm  ·  2ft'},{k:'Depth',v:'45cm  ·  1.5ft'},{k:'Height',v:'168cm  ·  5.5ft'},{k:'Power',v:'110v / 220v, 100w'}], note:'* Token Dispenser Required' },
   { key:'big',   img:'/images/machine-big.png',   name:'Big Machine',     tag:'Best for larger space', specs:[{k:'Width',v:'80cm  ·  1ft 1.7in'},{k:'Depth',v:'85cm  ·  1ft 1.7in'},{k:'Height',v:'195cm  ·  5ft 4in'},{k:'Power',v:'80–250w'}], note:null },
@@ -28,15 +30,20 @@ const FAQ_EN = [
   { q:'What is the revenue share?', a:"We offer a percentage of monthly gross commissions. The amount depends on foot traffic and store type. We can also arrange a flat monthly payment — contact us for details." },
   { q:'Are permits or licenses required?', a:'Yes, Amusy handles all permits. For example, in WA state we hold a master Amusement Operator License from the WA Gambling Commission. We will ensure to handle any local required permits in the state/city/county the business is located in.' },
   { q:'How do I know the machines are fair?', a:'We pride ourselves in providing claw machines that are actually winnable with high quality prizes. We are fully transparent that most of our machines do take more than one play to win, and skill. We are also flexible in allowing play until you win settings on most of our machines!' },
-  { q:'What happens if there is a machine issue?', a:'We take care of all servicing, maintenance, and repairs, so you never have to deal with machine issues or operational downtime.' },
+  { q:'What happens if there is a machine issue?', a:'We take care of all issues seriously & in a timely manner. Any Servicing, or maintenance will be completed as soon as possible within the next business day.' },
+  { q:'What kind of prizes are used?', a:'We use a mix of cute & high quality prizes suitable for all ages from popular Japanese prize makers. Such as YELL, Amufun, Furyuu, SK Japan, +more. These prizes include plushies, squishes, figures, keychains, & more. All prizes are branded, licensed, & authentic.' },
 ];
 
 
 const ALL_PRIZES = [
-  '/images/prize-1.png','/images/prize-2.png','/images/prize-3.png',
-  '/images/prize-4.png','/images/prize-5.png','/images/prize-6.png',
-  '/images/prize-7.png','/images/prize-8.png','/images/prize-9.png',
-  '/images/prize-10.png','/images/prize-11.png',
+  '/images/client/prize-1.jpg','/images/client/prize-2.jpg','/images/client/prize-3.jpg',
+  '/images/client/prize-4.jpg','/images/client/prize-5.jpg','/images/client/prize-6.jpg',
+  '/images/client/prize-7.jpg','/images/client/prize-8.jpg','/images/client/prize-9.jpg',
+  '/images/client/prize-10.jpg','/images/client/prize-11.jpg','/images/client/prize-12.jpg',
+  '/images/client/prize-13.jpg','/images/client/prize-14.jpg','/images/client/prize-15.jpg',
+  '/images/client/prize-16.jpg','/images/client/prize-17.jpg','/images/client/prize-18.jpg',
+  '/images/client/prize-19.jpg','/images/client/prize-20.jpg','/images/client/prize-21.jpg',
+  '/images/client/prize-22.jpg','/images/client/prize-23.jpg',
 ];
 
 const VIDEOS = [
@@ -47,7 +54,7 @@ const VIDEOS = [
 ];
 
 /* ─── FAQ FLOATING ICONS ─── */
-const FAQ_ICONS = ['🌸','⭐','🎌','🎀','✨','🌟','🎁','💝','🌙','🎐'];
+const FAQ_ICONS = ['🗼','🧸','🌸','✨','🌸','💖','🗼','🧸','✨','💖'];
 function FaqFloatingIcons() {
   return (
     <div style={{ position:'absolute', inset:0, pointerEvents:'none', overflow:'hidden' }}>
@@ -78,7 +85,7 @@ const MACHINE_TILTS = [-6, -2, 2, 6];
 // Y-offsets: outer cards drop slightly for natural fan
 const MACHINE_Y = [18, 8, 8, 18];
 
-function MachineFan({ machines }: { machines: typeof MACHINES }) {
+function MachineFan({ machines, tryFree }: { machines: typeof MACHINES; tryFree: string }) {
   const [hovered, setHovered] = useState<number | null>(null);
   const [selected, setSelected] = useState(0);
 
@@ -240,7 +247,7 @@ function MachineFan({ machines }: { machines: typeof MACHINES }) {
                 style={{ padding: '12px 40px', fontSize: 14 }}
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <span style={{ position: 'relative', zIndex: 1 }}>Try it free →</span>
+                <span style={{ position: 'relative', zIndex: 1 }}>{tryFree}</span>
               </button>
             </div>
           </div>
@@ -541,85 +548,110 @@ function useReveal() {
    overlap: marginLeft -68px (≈34% of 200px card)
 ──────────────────────────────────────────────────────────── */
 const HERO_CARDS = [
-  { img:'/images/machine-chibi.png',     name:'"Chibi"',   tag:'Small',     rot:-8,  ty:16,  z:1 },
+  { img:'/images/machine-chibi.png',     name:'Mini',       tag:'Small',     rot:-8,  ty:16,  z:1 },
   { img:'/images/machine-mid.png',       name:'Mid',       tag:'Normal',    rot:-3,  ty:-8,  z:3 },
   { img:'/images/machine-stackable.png', name:'Stackable', tag:'Mid-Large', rot: 3,  ty:-4,  z:4 },
   { img:'/images/machine-big.png',       name:'Big',       tag:'Large',     rot: 8,  ty:12,  z:2 },
 ];
 
-/* Floating toy icons in hero bg */
-const HERO_TOYS = [
-  { icon:'🕹️', x:8,  y:20, size:28 },
-  { icon:'🧸', x:88, y:15, size:22 },
-  { icon:'🐾', x:4,  y:65, size:24 },
-  { icon:'✨', x:92, y:55, size:26 },
-  { icon:'🎀', x:15, y:80, size:20 },
-  { icon:'❤️', x:82, y:78, size:26 },
-  { icon:'🕹️', x:50, y:10, size:18 },
-  { icon:'🧸', x:72, y:25, size:22 },
-  { icon:'🐾', x:25, y:45, size:20 },
-  { icon:'✨', x:60, y:82, size:24 },
-  { icon:'🎀', x:38, y:15, size:20 },
-  { icon:'❤️', x:95, y:38, size:18 },
-];
+/* Falling toy icons in hero bg — continuous fall from top */
+const EMOJI_POOL = ['🕹️','🧸','🐾','✨','🎀','❤️','🌸','💫','🎮','🌟','🍬','🎊'];
+const FALLING_TOYS = Array.from({ length: 22 }, (_, i) => ({
+  icon: EMOJI_POOL[i % EMOJI_POOL.length],
+  x: (i * 4.6 + (i % 3) * 2.1) % 96,
+  size: 16 + (i % 5) * 4,
+  dur: 7 + (i % 7) * 1.4,
+  delay: -(i * 0.85) % 9,
+  sway: (i % 2 === 0 ? 1 : -1) * (8 + (i % 4) * 5),
+}));
 
-function HeroFloatingToys() {
-  const [mousePos, setMousePos] = useState({ x: -999, y: -999 });
-  const sectionRef = useRef<HTMLDivElement>(null);
+/* ── SPARK BURST — tiny glowing particles that shoot out on emoji impact ── */
+const SPARK_COLORS = ['#ff87c4','#FFD166','#fff','#FF6EB0','#C9F','#FFB347'];
+const SPARK_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315];
 
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      const el = sectionRef.current;
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      setMousePos({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 });
-    };
-    const el = sectionRef.current;
-    el?.addEventListener('mousemove', onMove);
-    return () => el?.removeEventListener('mousemove', onMove);
-  }, []);
+interface Spark { id: number; x: number; }
 
+function SparkBurst({ x }: { x: number }) {
   return (
-    <div ref={sectionRef} style={{ position:'absolute', inset:0, pointerEvents:'none', overflow:'hidden' }}>
-      {HERO_TOYS.map((t, i) => {
-        const dx = mousePos.x - t.x;
-        const dy = mousePos.y - t.y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        const repelRadius = 18;
-        const repelStrength = dist < repelRadius ? (repelRadius - dist) / repelRadius * 28 : 0;
-        const angle = dist > 0.1 ? Math.atan2(dy, dx) : 0;
-        const rx = dist < repelRadius ? -Math.cos(angle) * repelStrength : 0;
-        const ry = dist < repelRadius ? -Math.sin(angle) * repelStrength : 0;
-        const vibrating = dist < repelRadius;
-
+    <div style={{
+      position: 'absolute',
+      left: `${x}%`,
+      bottom: '14%',
+      pointerEvents: 'none',
+      zIndex: 10,
+    }}>
+      {SPARK_ANGLES.map((angle, i) => {
+        const rad = (angle * Math.PI) / 180;
+        const dist = 14 + (i % 3) * 9;
+        const size = 4 + (i % 3) * 2;
+        const col = SPARK_COLORS[i % SPARK_COLORS.length];
         return (
           <motion.div
             key={i}
+            initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
             animate={{
-              x: rx,
-              y: ry,
-              rotate: vibrating ? [0, -4, 4, -3, 3, 0] : 0,
+              x: Math.cos(rad) * dist,
+              y: Math.sin(rad) * dist - 12,
+              opacity: 0,
+              scale: 0.15,
             }}
-            transition={vibrating
-              ? { rotate: { duration: 0.3, repeat: Infinity }, x: { type:'spring', stiffness:200, damping:18 }, y: { type:'spring', stiffness:200, damping:18 } }
-              : { type:'spring', stiffness:120, damping:22 }
-            }
+            transition={{ duration: 0.55, ease: 'easeOut', delay: i * 0.02 }}
             style={{
-              position:'absolute',
-              left:`${t.x}%`, top:`${t.y}%`,
-              fontSize: t.size,
-              opacity: 0.18,
-              userSelect:'none',
-              pointerEvents:'none',
+              position: 'absolute',
+              width: size,
+              height: size,
+              borderRadius: '50%',
+              background: col,
+              boxShadow: `0 0 6px 2px ${col}`,
             }}
-          >
-            {t.icon}
-          </motion.div>
+          />
         );
       })}
     </div>
   );
 }
+
+function HeroFloatingToys() {
+  const [sparks, setSparks] = useState<Spark[]>([]);
+
+  const addSpark = useCallback((x: number) => {
+    const id = Date.now() + Math.random();
+    setSparks(prev => [...prev.slice(-50), { id, x }]);
+    setTimeout(() => setSparks(prev => prev.filter(s => s.id !== id)), 680);
+  }, []);
+
+  return (
+    <div style={{ position:'absolute', inset:0, pointerEvents:'none', overflow:'hidden' }}>
+      {FALLING_TOYS.map((t, i) => (
+        <div
+          key={i}
+          style={{
+            position: 'absolute',
+            left: `${t.x}%`,
+            top: '-60px',
+            fontSize: t.size,
+            opacity: 0.62,
+            userSelect: 'none',
+            pointerEvents: 'none',
+            animation: `heroEmojiFall ${t.dur}s ${t.delay}s linear infinite`,
+            '--sway': `${t.sway}px`,
+          } as React.CSSProperties}
+          onAnimationIteration={() => addSpark(t.x)}
+        >
+          {t.icon}
+        </div>
+      ))}
+
+      {/* Sparkle bursts rendered at bottom when each emoji completes a fall */}
+      {sparks.map(s => (
+        <SparkBurst key={s.id} x={s.x} />
+      ))}
+    </div>
+  );
+}
+
+
+
 
 function HeroMachineStack({ machines }: { machines: typeof MACHINES }) {
   const [hov, setHov] = useState<number | null>(null);
@@ -727,13 +759,11 @@ function HeroMachineStack({ machines }: { machines: typeof MACHINES }) {
 export default function Home() {
   const [revTab, setRevTab] = useState(0);
   const [revKey, setRevKey] = useState(0);
-
   const [faqOpen, setFaqOpen] = useState<number|null>(null);
-
+  const { lang } = useLang();
+  const tx = lang === 'ja' ? t.ja : t.en;
 
   useMagnetic(); useReveal();
-
-
 
   const go = useCallback((id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior:'smooth' });
@@ -741,10 +771,22 @@ export default function Home() {
 
   const switchRevTab = (i: number) => { setRevTab(i); setRevKey(k=>k+1); };
 
-
   const P = { fontFamily:"'Montserrat',sans-serif" };
-  const faqs = FAQ_EN;
+
+  const FAQ_JP = [
+    { q:'マシンの設置は本当に無料ですか？', a:'はい、100%無料です。Amysyがマシン費用、設置、景品、メンテナンス、補充をすべて負担します。必要なのはスペース、Wi-Fi、コンセントだけです。' },
+    { q:'どのくらいのスペースが必要ですか？', a:'最小（Chibi）マシンは約60cm×60cmのスペースがあれば設置できます。大型スタッカブルは150〜300cmほど必要です。無料相談後、最適なサイズをご提案します。' },
+    { q:'景品はどのくらいの頻度で補充されますか？', a:'人気に応じて週1〜月1回の頻度で確認・補充します。新しい景品は毎月ローテーションされます。' },
+    { q:'収益シェアはどうなっていますか？', a:'月間総売上の一定割合をシェアします。金額は来客数や店舗タイプによります。月額固定払いも対応可能ですので、お問い合わせください。' },
+    { q:'許可証やライセンスは必要ですか？', a:'はい、すべての許可証はAmysyが取得します。例えばワシントン州ではWAギャンブル委員会から遊技場営業者ライセンスを取得しています。' },
+    { q:'マシンの公平性はどう保証されますか？', a:'実際に勝てるクレーンゲームを提供することを誇りにしています。ほとんどのマシンでは「遊び続ければ勝てる」設定も柔軟に対応しています。' },
+    { q:'マシンに問題が発生した場合は？', a:'すべての問題に迅速かつ真剣に対応します。サービスやメンテナンスは翌営業日以内に対応します。' },
+    { q:'どんな景品が使われていますか？', a:'YELL・Amufun・Furyuu・SK Japanなど人気の日本のメーカーから、ぬいぐるみ・フィギュア・キーホルダーなど全年齢向けの高品質景品を取り揃えています。すべて正規ライセンス品です。' },
+  ];
+
+  const faqs = lang === 'ja' ? FAQ_JP : FAQ_EN;
   const td = TAB_DATA[revTab];
+
 
 
 
@@ -759,7 +801,8 @@ export default function Home() {
         <section id="hero" style={{
           minHeight: '100vh', display: 'flex', flexDirection: 'column',
           justifyContent: 'center', alignItems: 'center',
-          paddingTop: 140, paddingBottom: 80, background: 'var(--bg)',
+          paddingTop: 140, paddingBottom: 80,
+          background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,135,196,0.13) 0%, rgba(255,200,220,0.06) 45%, var(--bg) 72%)',
           position: 'relative', overflow: 'hidden', textAlign: 'center',
         }}>
           {/* Floating toys that repel mouse */}
@@ -772,46 +815,58 @@ export default function Home() {
             {/* ── Centered text ── */}
             <div className="blur-in bi1" style={{ marginBottom: 8 }}>
               <div className="lbl" style={{ justifyContent: 'center' }}>
-                Japanese Claw Machine Placement
+                {lang === 'ja' ? '🎌 日本のクレーンゲーム設置' : 'Japanese Claw Machine Placement'}
               </div>
             </div>
 
             <h1 className="h1" style={{ marginBottom: 20 }}>
-              <span className="blur-in bi2" style={{ display: 'block' }}>
-                Elevate Your Business with Us! Add Entertainment.
-              </span>
-              <span className="blur-in bi3 italic-pink" style={{ display: 'block' }}>
-                {'Earn '}
-                <BrushHighlight>Revenue.</BrushHighlight>
+              <span className="blur-in bi2 hero-shimmer-heading" style={{ display: 'block' }}>
+                {tx.hero.h1a} {tx.hero.h1b}
               </span>
             </h1>
 
-            <p className="blur-in bi4" style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--ink2)', maxWidth: 520, margin: '0 auto 32px', ...P }}>
-              We partner with businesses by transforming their empty spaces with our fun &amp; lively claw machine setups!~
+            <p className="blur-in bi4" style={{ fontSize: 20, lineHeight: 1.8, color: 'var(--ink2)', maxWidth: 620, margin: '0 auto 32px', ...P }}>
+              {tx.hero.sub}
             </p>
 
             <div className="blur-in bi5" style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center', marginBottom: 16 }}>
               <button className="btn btn-dark" onClick={() => go('contact')}>
-                <span style={{ position: 'relative', zIndex: 1 }}>Become a Partner →</span>
+                <span style={{ position: 'relative', zIndex: 1 }}>{tx.hero.cta1}</span>
               </button>
-              <BtnOutline onClick={() => go('revenue')}>Learn More</BtnOutline>
             </div>
 
-            <div className="blur-in bi6" style={{ display: 'flex', flexWrap: 'wrap', gap: 20, justifyContent: 'center', marginBottom: 56 }}>
-              {['ZERO cost to partners', 'Additional Revenue for your store', '80+ locations'].map(t => (
-                <span key={t} style={{ fontSize: 15, color: 'var(--ink3)', display: 'flex', alignItems: 'center', gap: 5, ...P }}>
-                  <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--pink)', display: 'block' }} />
-                  {t}
-                </span>
-              ))}
-            </div>
 
-            {/* ── #8 Machine photos — large, spread out ── */}
-            <div className="blur-in bi7" style={{ marginTop: 32, paddingBottom: 40 }}>
-              {/* Top row: 4 machine cards overlapping/fanned like the PDF reference */}
+          </div>
+        </section>
+
+        {/* ── SHORT ABOUT US ── */}
+        <section id="about-short" className="section" style={{ background: 'var(--bg2)', paddingTop: 'clamp(48px,6vw,80px)', paddingBottom: 'clamp(48px,6vw,80px)' }}>
+          <div className="container" style={{ maxWidth: 800, textAlign: 'center' }}>
+            <div className="reveal">
+              <div className="lbl" style={{ justifyContent: 'center', marginBottom: 14 }}>{tx.aboutShort.label}</div>
+              <ScribbleDeco color="#ff87c4" width={64} />
+              <h2 className="h2" style={{ marginBottom: 16 }}>
+                <>{tx.aboutShort.h2a}<BrushHighlight>{tx.aboutShort.h2hl}</BrushHighlight>{tx.aboutShort.h2b}</>
+              </h2>
+              <p style={{ fontSize: 16, color: 'var(--ink2)', lineHeight: 1.8, maxWidth: 640, margin: '0 auto', ...P }}>
+                {tx.aboutShort.body}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── MACHINE PHOTOS (moved to 3rd section) ── */}
+        <section id="machine-showcase" className="section" style={{ background: 'var(--bg)', paddingTop: 'clamp(48px,6vw,80px)', paddingBottom: 'clamp(48px,6vw,80px)' }}>
+          <div className="container">
+            <div className="reveal" style={{ textAlign: 'center', marginBottom: 40 }}>
+              <div className="lbl" style={{ justifyContent: 'center', marginBottom: 14 }}>{tx.ourMachines.label}</div>
+              <h2 className="h2">{tx.ourMachines.h2}</h2>
+            </div>
+            <div className="reveal d1">
+              {/* Top row: 4 machine cards overlapping/fanned */}
               <div style={{
                 display: 'flex', justifyContent: 'center', alignItems: 'flex-end',
-                gap: 0, position: 'relative', marginBottom: 0,
+                gap: 0, position: 'relative', marginBottom: 24,
               }}>
                 {MACHINES.map((m, i) => {
                   const rots = [-8, -3, 3, 8];
@@ -857,20 +912,136 @@ export default function Home() {
                   );
                 })}
               </div>
+              {/* Button to jump to size details */}
+              <div style={{ textAlign: 'center', marginTop: 8 }}>
+                <button className="btn btn-dark" onClick={() => go('machines')} style={{ padding: '14px 36px', fontSize: 14 }}>
+                  <span style={{ position: 'relative', zIndex: 1 }}>{tx.setup.viewDetails}</span>
+                </button>
+              </div>
             </div>
-
           </div>
         </section>
 
-        {/* ── VIDEOS — horizontal auto-scroll, blur edges ── */}
+        {/* ── LOGO TICKER ── */}
+        <div style={{
+          borderTop:'1px solid var(--border)',
+          borderBottom:'1px solid var(--border)',
+          background:'var(--white)',
+          overflow:'hidden',
+          height:78,
+        }}>
+          <div style={{
+            display:'flex',
+            alignItems:'center',
+            height:'100%',
+            width:'max-content',
+            animation:'logoSlide 45s linear infinite',
+            marginTop: -12,
+          }}>
+            {[...Array(8)].map((_,i)=>(
+              <img key={i} src="/images/client/logo-wrap.png" alt="Amusy"
+                style={{
+                  height:500,
+                  width:'auto',
+                  flexShrink:0,
+                  display:'block',
+                  opacity:0.85,
+                }} />
+            ))}
+          </div>
+        </div>
+
+        {/* ── SETUP EXAMPLES (REVENUE TABS) ── */}
+        <section id="revenue" className="section" style={{position:'relative', overflow:'hidden'}}>
+          {/* Amusy pattern background */}
+          <div style={{
+            position:'absolute', inset:0,
+            backgroundImage:'url("/images/client/bg-logo-transparent.png")',
+            backgroundSize:'700px',
+            backgroundRepeat:'repeat',
+            opacity: 0.25,
+            pointerEvents:'none',
+          }}/>
+          <div className="container" style={{position:'relative', zIndex:1}}>
+            <div className="reveal" style={{maxWidth:580,marginBottom:44}}>
+              <div className="lbl" style={{marginBottom:14}}>{tx.setup.label}</div>
+              <ScribbleDeco />
+              <h2 className="h2" style={{marginBottom:12}}>
+                {tx.setup.h2a}
+                <BrushHighlight>{tx.setup.h2hl}</BrushHighlight>
+              </h2>
+              <p style={{fontSize:14.5,color:'var(--ink2)',lineHeight:1.75,...P}}>{tx.setup.sub}</p>
+            </div>
+            <div className="reveal d1" style={{marginBottom:36}}>
+              <div className="tab-bar">
+                {TAB_DATA.map((tabItem,i)=>(
+                  <button key={i} className={`tab-btn ${revTab===i?'active':''}`} onClick={()=>switchRevTab(i)}>{lang === 'ja' ? tx.setup.tabs[i] : tabItem.tab}</button>
+                ))}
+              </div>
+            </div>
+            <motion.div key={revKey} initial={{opacity:0,y:14}} animate={{opacity:1,y:0}} transition={{duration:0.35,ease:[0.16,1,0.3,1]}}
+              style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:40,alignItems:'center'}} className="grid-2"
+            >
+              <div>
+                <h3 className="h3" style={{marginBottom:12}}>{tx.setup.tabContent[revTab].headline}</h3>
+                <p style={{fontSize:14.5,color:'var(--ink2)',lineHeight:1.8,marginBottom:18,...P}}>{tx.setup.tabContent[revTab].body}</p>
+                <p style={{fontSize:12,color:'var(--ink3)',fontStyle:'italic',marginBottom:26,...P}}>{tx.setup.tabContent[revTab].note}</p>
+                <button className="btn btn-dark" onClick={()=>go('contact')}>
+                  <span style={{position:'relative',zIndex:1}}>{tx.setup.cta}</span>
+                </button>
+              </div>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+                {td.imgs.map((img,si)=>(
+                  <div key={si} style={{borderRadius:16, overflow:'hidden', boxShadow:'var(--sh-sm)', height: 220}}>
+                    <img src={img} alt="Location" style={{width:'100%', height:'100%', objectFit:'cover', display:'block'}} />
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+
+        {/* ── HOW IT WORKS ── */}
+        <section id="how" className="section" style={{background:'var(--bg2)'}}>
+          <div className="container">
+            <div className="reveal" style={{marginBottom:60}}>
+              <div className="lbl" style={{marginBottom:14}}>{tx.howItWorks.label}</div>
+              <ScribbleDeco />
+              <h2 className="h2"><>{tx.howItWorks.h2a}<BrushHighlight>{tx.howItWorks.h2hl}</BrushHighlight></></h2>
+            </div>
+
+            {/* Steps — proper responsive layout */}
+            <div className="steps-row">
+              {tx.howItWorks.steps.map((s,i)=>{
+                const icons = [<Mail key="m" size={24} color="var(--pink)" strokeWidth={2}/>,<Wrench key="w" size={24} color="var(--pink)" strokeWidth={2}/>,<HandCoins key="h" size={24} color="var(--pink)" strokeWidth={2}/>];
+                const num = String(i+1).padStart(2,'0');
+                return (
+                <React.Fragment key={num}>
+                  <div className={`reveal d${i+1}`} style={{position:'relative',paddingTop:12}}>
+                    <div style={{...P,fontSize:72,fontWeight:800,lineHeight:1,letterSpacing:'-0.04em',color:'rgba(0,0,0,0.05)',position:'absolute',top:-8,left:-4,userSelect:'none'}}>{num}</div>
+                    <div style={{position:'relative',zIndex:1}}>
+                      <div style={{width:50,height:50,borderRadius:13,background:'#fff',border:'1px solid var(--border)',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:18,boxShadow:'var(--sh-sm)',...P,fontSize:15,fontWeight:800,color:'var(--pink)'}}>{icons[i]}</div>
+                      <h3 style={{...P,fontSize:18,fontWeight:700,marginBottom:8}}>{s.t}</h3>
+                      <p style={{fontSize:14,color:'var(--ink2)',lineHeight:1.75,...P}}>{s.b}</p>
+                    </div>
+                  </div>
+                  {i < 2 && <div className="step-connector"><div className="step-connector-line"/></div>}
+                </React.Fragment>
+              )})}
+            </div>
+          </div>
+        </section>
+
+        {/* ── VIDEOS — horizontal auto-scroll, blur edges (moved after steps) ── */}
         <section id="videos" style={{ padding: 'clamp(64px,8vw,100px) 0', background: 'var(--bg2)', overflow: 'hidden' }}>
           <div className="container" style={{ marginBottom: 36 }}>
             <div className="reveal" style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
               <div>
-                <div className="lbl" style={{ marginBottom:14 }}>Check out our Instagram</div>
-                <h2 className="h2"><><BrushHighlight>Watch us</BrushHighlight> in action!</></h2>
+                <div className="lbl" style={{ marginBottom:14 }}>{tx.videos.label}</div>
+                <h2 className="h2"><><BrushHighlight>{tx.videos.h2a}</BrushHighlight>{tx.videos.h2b}</></h2>
                 <p style={{ marginTop:10, fontSize:14, color:'var(--ink2)', fontFamily:"'Montserrat',sans-serif" }}>
-                  Hover any video for sound — audio fades in and out smoothly.
+                  {tx.videos.hint}
                 </p>
               </div>
               <a href="https://www.instagram.com/amusy_entertainment/" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
@@ -879,7 +1050,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Scroll container — CSS mask blur on both edges, NO white gradient */}
+          {/* Scroll container */}
           <div style={{
             position: 'relative',
             overflow: 'hidden',
@@ -899,102 +1070,61 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── TICKER ── */}
-        <div style={{borderTop:'1px solid var(--border)',borderBottom:'1px solid var(--border)',padding:'13px 0',background:'var(--white)',overflow:'hidden'}}>
-          <div className="marquee-inner normal">
-            {[...Array(2)].flatMap(()=>['Zero upfront cost','Branded & licensed Japanese prizes','WA State Licensed','Monthly revenue share','Full maintenance included','Free installation','50+ locations']).map((item,i)=>(
-              <span key={i} style={{display:'inline-flex',alignItems:'center',gap:22,padding:'0 22px',fontSize:12,fontWeight:500,color:'var(--ink3)',whiteSpace:'nowrap',...P}}>
-                {item}
-                <span style={{display:'block',width:3,height:3,borderRadius:'50%',background:'var(--pink)',flexShrink:0}}/>
-              </span>
-            ))}
-          </div>
-        </div>
+        {/* ── BENEFITS — WHY AMUSY? ── */}
+        <section id="benefits" className="section" style={{ background: 'var(--bg)', position:'relative', overflow:'hidden' }}>
+          {/* Amusy pattern background */}
+          <div style={{
+            position:'absolute', inset:0,
+            backgroundImage:'url("/images/client/bg-logo-transparent.png")',
+            backgroundSize:'700px',
+            backgroundRepeat:'repeat',
+            opacity: 0.25,
+            pointerEvents:'none',
+          }}/>
+          <div className="container" style={{position:'relative', zIndex:1}}>
+            <div className="reveal" style={{ textAlign: 'left', marginBottom: 56 }}>
+              <div className="lbl" style={{ justifyContent: 'flex-start', marginBottom: 14 }}>{tx.benefits.label}</div>
+              <ScribbleDeco color="#ff87c4" width={64} />
+              <h2 className="h2">{lang === 'ja' ? 'なぜ' : 'Why '}<BrushHighlight>{lang === 'ja' ? 'Amusyなのか？' : 'Amusy?'}</BrushHighlight></h2>
+            </div>
 
-        {/* ── REVENUE TABS ── */}
-        <section id="revenue" className="section">
-          <div className="container">
-            <div className="reveal" style={{maxWidth:580,marginBottom:44}}>
-              <div className="lbl" style={{marginBottom:14}}>Why Partner With Us</div>
-              <ScribbleDeco />
-              <h2 className="h2" style={{marginBottom:12}}>
-                {'Entertainment & new revenue stream that '}
-                <BrushHighlight>costs your store $0.</BrushHighlight>
-              </h2>
-              <p style={{fontSize:14.5,color:'var(--ink2)',lineHeight:1.75,...P}}>Pick your store type to see how Amusy fits your business.</p>
-            </div>
-            <div className="reveal d1" style={{marginBottom:36}}>
-              <div className="tab-bar">
-                {TAB_DATA.map((t,i)=>(
-                  <button key={i} className={`tab-btn ${revTab===i?'active':''}`} onClick={()=>switchRevTab(i)}>{t.tab}</button>
-                ))}
-              </div>
-            </div>
-            <motion.div key={revKey} initial={{opacity:0,y:14}} animate={{opacity:1,y:0}} transition={{duration:0.35,ease:[0.16,1,0.3,1]}}
-              style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:40,alignItems:'center'}} className="grid-2"
-            >
-              <div>
-                <h3 className="h3" style={{marginBottom:12}}>{td.headline}</h3>
-                <p style={{fontSize:14.5,color:'var(--ink2)',lineHeight:1.8,marginBottom:18,...P}}>{td.body}</p>
-                <p style={{fontSize:12,color:'var(--ink3)',fontStyle:'italic',marginBottom:26,...P}}>{td.note}</p>
-                <button className="btn btn-dark" onClick={()=>go('contact')}>
-                  <span style={{position:'relative',zIndex:1}}>Get In Touch →</span>
-                </button>
-              </div>
-              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-                {td.imgs.map((img,si)=>(
-                  <div key={si} style={{borderRadius:16, overflow:'hidden', boxShadow:'var(--sh-sm)', height: 220}}>
-                    <img src={img} alt="Location" style={{width:'100%', height:'100%', objectFit:'cover', display:'block'}} />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }} className="grid-2">
+              {tx.benefits.items.map((b, i) => (
+                <div key={i} className={`reveal d${(i % 3) + 1}`} style={{
+                  padding: '28px 24px',
+                  background: 'var(--white)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 18,
+                  boxShadow: 'var(--sh-sm)',
+                }}>
+                  <div style={{
+                    width: 40, height: 40, borderRadius: 10,
+                    background: '#FFF0F5',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    marginBottom: 16, fontSize: 18,
+                  }}>
+                    {['🎮', '🛠️', '✨', '📍', '💰', '🔁'][i]}
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-
-        {/* ── HOW IT WORKS ── */}
-        <section id="how" className="section" style={{background:'var(--bg2)'}}>
-          <div className="container">
-            <div className="reveal" style={{marginBottom:60}}>
-              <div className="lbl" style={{marginBottom:14}}>How It works</div>
-              <ScribbleDeco />
-              <h2 className="h2"><>Three steps to <BrushHighlight>passive income.</BrushHighlight></></h2>
-            </div>
-
-            {/* Steps — proper responsive layout */}
-            <div className="steps-row">
-              {[{num:'01',t:'Contact Us',b:"Contact us through the form on our web, email, or through our socials. We'll respond & help assess your space to determine which setup works best.",icon:<Mail size={24} color="var(--pink)" strokeWidth={2}/>},{num:'02',t:'We Install',b:'Our team handles installation, setup, ongoing maintenance, and refills. We take care of it all, zero cost & zero disruption.',icon:<Wrench size={24} color="var(--pink)" strokeWidth={2}/>},{num:'03',t:'Collect Revenue',b:'Receive your monthly revenue share while we handle everything for you, completely hassle-free!',icon:<HandCoins size={24} color="var(--pink)" strokeWidth={2}/>}]
-              .map((s,i)=>(
-                <React.Fragment key={s.num}>
-                  <div className={`reveal d${i+1}`} style={{position:'relative',paddingTop:12}}>
-                    <div style={{...P,fontSize:72,fontWeight:800,lineHeight:1,letterSpacing:'-0.04em',color:'rgba(0,0,0,0.05)',position:'absolute',top:-8,left:-4,userSelect:'none'}}>{s.num}</div>
-                    <div style={{position:'relative',zIndex:1}}>
-                      <div style={{width:50,height:50,borderRadius:13,background:'#fff',border:'1px solid var(--border)',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:18,boxShadow:'var(--sh-sm)',...P,fontSize:15,fontWeight:800,color:'var(--pink)'}}>{s.icon || s.num}</div>
-                      <h3 style={{...P,fontSize:18,fontWeight:700,marginBottom:8}}>{s.t}</h3>
-                      <p style={{fontSize:14,color:'var(--ink2)',lineHeight:1.75,...P}}>{s.b}</p>
-                    </div>
-                  </div>
-                  {i < 2 && <div className="step-connector"><div className="step-connector-line"/></div>}
-                </React.Fragment>
+                  <h3 style={{ ...P, fontSize: 17, fontWeight: 700, marginBottom: 8, color: 'var(--ink)' }}>{b.title}</h3>
+                  <p style={{ ...P, fontSize: 14, color: 'var(--ink2)', lineHeight: 1.75 }}>{b.body}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── MACHINES (fan scatter hover-straighten) ── */}
         <section id="machines" className="section" style={{ background: 'var(--bg)' }}>
           <div className="container">
             <div className="reveal" style={{ maxWidth: 580, marginBottom: 56 }}>
-              <div className="lbl" style={{ marginBottom: 14 }}>Machine Types</div>
+              <div className="lbl" style={{ marginBottom: 14 }}>{tx.machineTypes.label}</div>
               <h2 className="h2" style={{ marginBottom: 12 }}>
-                {<>Choose the machine<br/>that <BrushHighlight>fits your space.</BrushHighlight></>}
+                {<>{tx.machineTypes.h2a}<br/><BrushHighlight>{tx.machineTypes.h2hl}</BrushHighlight></>}
               </h2>
               <p style={{ fontSize: 14.5, color: 'var(--ink2)', lineHeight: 1.75, fontFamily: "'Montserrat',sans-serif" }}>
-                All installed and maintained at no cost. Hover each card to explore.
+                {tx.machineTypes.sub}
               </p>
             </div>
-            <MachineFan machines={MACHINES} />
+            <MachineFan machines={MACHINES} tryFree={tx.machineTypes.tryFree} />
           </div>
         </section>
 
@@ -1002,11 +1132,11 @@ export default function Home() {
         <section id="prizes" className="section" style={{background:'var(--bg2)'}}>
           <div className="container">
             <div className="reveal" style={{marginBottom:40}}>
-              <div className="lbl" style={{marginBottom:14}}>What&apos;s Inside</div>
+              <div className="lbl" style={{marginBottom:14}}>{tx.prizes.label}</div>
               <ScribbleDeco />
-              <h2 className="h2"><>Premium prizes <BrushHighlight>straight from Japan.</BrushHighlight></></h2>
+              <h2 className="h2"><>{tx.prizes.h2a}<BrushHighlight>{tx.prizes.h2hl}</BrushHighlight></></h2>
               <p style={{marginTop:12,fontSize:15,color:'var(--ink2)',maxWidth:560,...P}}>
-                Authentic branded &amp; licensed merchandise rotated monthly. Your customers always have a new reason to visit!
+                {tx.prizes.sub}
               </p>
             </div>
             <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:14}} className="grid-4 reveal d1">
@@ -1026,8 +1156,17 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="faq" className="section">
-          <div className="container" style={{ maxWidth: 820, margin: '0 auto' }}>
+        <section id="faq" className="section" style={{position:'relative', overflow:'hidden'}}>
+          {/* Amusy pattern background */}
+          <div style={{
+            position:'absolute', inset:0,
+            backgroundImage:'url("/images/client/bg-logo-transparent.png")',
+            backgroundSize:'700px',
+            backgroundRepeat:'repeat',
+            opacity: 0.25,
+            pointerEvents:'none',
+          }}/>
+          <div className="container" style={{ maxWidth: 820, margin: '0 auto', position:'relative', zIndex:1 }}>
             {/* Blur-in heading */}
             <motion.div
               initial={{ opacity: 0, filter: 'blur(16px)', y: 12 }}
@@ -1042,10 +1181,10 @@ export default function Home() {
                 fontWeight: 700, lineHeight: 1.1,
                 letterSpacing: '-0.025em', color: 'var(--ink)',
               }}>
-                {<>Let&apos;s clear a few <BrushHighlight>things up</BrushHighlight></>}
+                {<>{tx.faq.h2a} <BrushHighlight>{tx.faq.h2b}</BrushHighlight></>}
               </h2>
               <p style={{ marginTop: 14, fontSize: 15, color: 'var(--ink3)', fontFamily: "'Montserrat',sans-serif" }}>
-                If you have any other questions, please email us.
+                {tx.faq.sub}
               </p>
             </motion.div>
 
@@ -1147,26 +1286,32 @@ export default function Home() {
         <section id="contact" className="section">
           <div className="container" style={{maxWidth:600,margin:'0 auto'}}>
             <div className="reveal" style={{marginBottom:40}}>
-              <div className="lbl" style={{marginBottom:14}}>Contact</div>
-              <h2 className="h2"><><ScribbleDeco width={48} />{"Let's talk."}</></h2>
+              <div className="lbl" style={{marginBottom:14}}>{tx.contact.label}</div>
+              <h2 className="h2"><><ScribbleDeco width={48} />{lang === 'ja' ? 'お問い合わせ' : "Let's talk."}</></h2>
             </div>
             <div className="reveal d1" style={{background:'#fff',border:'1px solid var(--border)',borderRadius:22,padding:'clamp(22px,4vw,42px)',boxShadow:'var(--sh-sm)'}}>
               <form onSubmit={e=>e.preventDefault()} style={{display:'flex',flexDirection:'column',gap:13}} noValidate>
-                {[{type:'text',ph:'Your name'},{type:'text',ph:'Business name'},{type:'email',ph:'Email address'},{type:'tel',ph:'Phone number'},{type:'text',ph:'Business address'}].map((f,i)=>(
+                {[
+                  {type:'text',   ph: tx.contact.namePh},
+                  {type:'text',   ph: tx.contact.bizPh},
+                  {type:'email',  ph: tx.contact.emailPh},
+                  {type:'tel',    ph: tx.contact.phonePh},
+                  {type:'text',   ph: tx.contact.addressPh},
+                ].map((f,i)=>(
                   <input key={i} type={f.type} placeholder={f.ph} style={{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 15px',fontSize:13.5,color:'var(--ink)',outline:'none',width:'100%',...P,transition:'border-color 0.2s'}}
                     onFocus={e=>e.currentTarget.style.borderColor='var(--pink)'}
                     onBlur={e=>e.currentTarget.style.borderColor='var(--border)'}
                   />
                 ))}
-                <textarea placeholder={'Tell us about your space...'} rows={4} style={{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 15px',fontSize:13.5,color:'var(--ink)',outline:'none',width:'100%',resize:'vertical',...P,transition:'border-color 0.2s'}}
+                <textarea placeholder={tx.contact.msgPh} rows={4} style={{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 15px',fontSize:13.5,color:'var(--ink)',outline:'none',width:'100%',resize:'vertical',...P,transition:'border-color 0.2s'}}
                   onFocus={e=>e.currentTarget.style.borderColor='var(--pink)'}
                   onBlur={e=>e.currentTarget.style.borderColor='var(--border)'}
                 />
                 <button type="submit" className="btn btn-dark" style={{width:'100%',padding:'14px',fontSize:14}}>
-                  <span style={{position:'relative',zIndex:1}}>Send Message →</span>
+                  <span style={{position:'relative',zIndex:1}}>{tx.contact.btn}</span>
                 </button>
                 <p style={{textAlign:'center',fontSize:12,color:'var(--ink3)',...P}}>
-                  Or email us at 
+                  {tx.contact.emailLabel}{' '}
                   <a href="mailto:info@amusyentertainment.com" style={{color:'var(--pink)',fontWeight:600}}>info@amusyentertainment.com</a>
                 </p>
               </form>
@@ -1177,23 +1322,21 @@ export default function Home() {
         {/* ── BRAND BANNER ── */}
         <section style={{
           position:'relative', overflow:'hidden',
-          background:'linear-gradient(135deg,#fff5f9 0%,#fff0f5 50%,#fff5f9 100%)',
+          background:'#fff5f9',
           padding:'72px 20px', textAlign:'center',
           borderTop:'1px solid rgba(255,135,196,0.15)',
         }}>
           <div style={{
-            position:'absolute',inset:0,
-            backgroundImage:`url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><text y='55' x='8' font-size='38' fill='%23ff87c4' opacity='0.12'>🕹</text><text y='110' x='60' font-size='32' fill='%23ff87c4' opacity='0.1'>🧸</text><text y='30' x='75' font-size='28' fill='%23ff87c4' opacity='0.1'>🌸</text></svg>")`,
-            backgroundSize:'120px 120px',
+            position:'absolute', inset:0,
+            backgroundImage:'url("/images/client/bg-logo-transparent.png")',
+            backgroundSize:'700px',
+            backgroundRepeat:'repeat',
+            opacity: 0.30,
             pointerEvents:'none',
           }}/>
-          <div style={{position:'relative',zIndex:1}}>
-            <img src="/images/amusy-logo.png" alt="Amusy"
-              style={{height:64,objectFit:'contain',display:'block',margin:'0 auto 12px'}}/>
-            <p style={{
-              fontFamily:"'Montserrat',sans-serif",
-              fontSize:18, color:'#ff87c4', fontWeight:700, letterSpacing:'0.06em',
-            }}>Japanese Claw Machines</p>
+          <div style={{position:'relative', zIndex:1}}>
+            <img src="/images/end-logo-transparent.png" alt="Amusy — Japanese Claw Machines"
+              style={{height:160,objectFit:'contain',display:'block',margin:'0 auto'}}/>
           </div>
         </section>
 
@@ -1207,10 +1350,35 @@ export default function Home() {
       <style>{`
         input::placeholder,textarea::placeholder{color:var(--ink3)}
         .footer-cols{display:grid}
+        /* Logo ticker slide */
+        @keyframes logoSlide { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
         /* Sound bar animations */
         @keyframes soundBar1{0%{height:3px}100%{height:11px}}
         @keyframes soundBar2{0%{height:9px}100%{height:3px}}
         @keyframes soundBar3{0%{height:4px}100%{height:13px}}
+        /* Hero shimmer — subtle white sweep through pink text */
+        .hero-shimmer-heading {
+          color: #ff87c4;
+          background: linear-gradient(
+            105deg,
+            #ff87c4 0%,
+            #ff87c4 42%,
+            #ffb0d8 50%,
+            #ff87c4 58%,
+            #ff87c4 100%
+          );
+          background-size: 250% 100%;
+          background-position: 100% 0;
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: heroShimmer 6.5s ease-in-out infinite;
+        }
+        @keyframes heroShimmer {
+          0%   { background-position: 100% 0; }
+          38%  { background-position: -50% 0; }
+          100% { background-position: -50% 0; }
+        }
         @media(max-width:900px){
           .footer-cols{grid-template-columns:1fr 1fr !important;gap:28px !important}
           .video-scroll-track{padding:12px 40px 20px}

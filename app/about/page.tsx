@@ -2,47 +2,75 @@
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useLang } from '../context/LangContext';
+import { t } from '../translations';
 
 const P = { fontFamily:"'Montserrat',sans-serif" };
 
 export default function AboutPage() {
+  const { lang } = useLang();
+  const tx = lang === 'ja' ? t.ja : t.en;
   return (
     <div style={{background:'#FAFAF8', minHeight:'100vh'}}>
       <Navbar activePage="About"/>
 
-      {/* ── TOP BANNER — About Us hero image ── */}
+      {/* ── HERO BANNER with Amusy pattern background ── */}
       <div style={{
-        paddingTop: 72,
-        position: 'relative', overflow: 'hidden',
+        position: 'relative',
+        overflow: 'hidden',
+        background: '#fff5f9',
+        paddingTop: 80,
+        paddingBottom: 0,
+        textAlign: 'center',
       }}>
-        <img src="/images/banner-main.png" alt="Amusy — About Us"
-          style={{
-            width: '100%',
-            maxHeight: 420,
-            objectFit: 'cover',
-            display: 'block',
-          }}/>
+        {/* Amusy repeating pattern */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: 'url("/images/client/bg-logo-transparent.png")',
+          backgroundSize: '600px',
+          backgroundRepeat: 'repeat',
+          opacity: 0.35,
+          pointerEvents: 'none',
+        }}/>
+        {/* Soft radial pink glow in the centre */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,135,196,0.18) 0%, transparent 80%)',
+          pointerEvents: 'none',
+        }}/>
+        {/* About-amusy image sitting on top */}
+        <div style={{ position: 'relative', zIndex: 1, display: 'inline-block' }}>
+          <img
+            src="/images/client/about-amusy.png"
+            alt="About Amusy"
+            style={{
+              maxWidth: 380,
+              width: '100%',
+              objectFit: 'contain',
+              display: 'block',
+              filter: 'drop-shadow(0 16px 40px rgba(255,135,196,0.28))',
+            }}
+          />
+        </div>
       </div>
 
-      <main style={{maxWidth:800, margin:'0 auto', padding:'56px clamp(20px,4vw,48px) 80px'}}>
+      <main style={{maxWidth:900, margin:'0 auto', padding:'52px clamp(20px,4vw,48px) 80px'}}>
 
-        {/* ── How We Started ── */}
-        <div style={{background:'#fff', border:'1px solid rgba(0,0,0,0.07)', borderRadius:20, padding:'32px 36px', boxShadow:'0 2px 8px rgba(0,0,0,0.04)', marginBottom:24}}>
-          <h2 style={{...P, fontSize:20, fontWeight:700, color:'#1C1007', marginBottom:14}}>How We Started</h2>
-          {/* First paragraph moved here from the removed intro section */}
-          <p style={{...P, fontSize:15, color:'#4A3728', lineHeight:1.85, marginBottom:14}}>
-            Amusy Entertainment was founded locally with a single vision: share the excitement and charm of authentic Japanese claw machine culture with the Greater Seattle community — and beyond.
+        {/* ── Two column paragraphs ── */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, marginBottom:48 }} className="grid-2-about">
+          <p style={{...P, fontSize:16, color:'#4A3728', lineHeight:1.85, textAlign:'center'}}>
+            {tx.about.col1}
           </p>
-          <p style={{...P, fontSize:15, color:'#4A3728', lineHeight:1.85}}>
-            We discovered that store owners wanted unique entertainment for their customers, and we had the means to provide it — at zero cost. What started as a passion project has grown into a network of 50+ locations across the Greater Seattle area.
+          <p style={{...P, fontSize:16, color:'#4A3728', lineHeight:1.85, textAlign:'center'}}>
+            {tx.about.col2}
           </p>
         </div>
 
         {/* ── What Makes Us Different ── */}
         <div style={{background:'#fff', border:'1px solid rgba(0,0,0,0.07)', borderRadius:20, padding:'32px 36px', boxShadow:'0 2px 8px rgba(0,0,0,0.04)', marginBottom:24}}>
-          <h2 style={{...P, fontSize:20, fontWeight:700, color:'#1C1007', marginBottom:14}}>What Makes Us Different</h2>
+          <h2 style={{...P, fontSize:20, fontWeight:700, color:'#1C1007', marginBottom:14}}>{tx.about.diffTitle}</h2>
           <p style={{...P, fontSize:15, color:'#4A3728', lineHeight:1.85}}>
-            We specialize exclusively using only authentic licensed & branded products that include Sanrio, popular kawaii brands (YELL, Amufun, SK Japan Furyuu, +more), figures, and other Japanese collectibles. We rotate prizes monthly, ensuring customers always have a reason to return. And because we cover every expense. Machines, installation, restocking, and maintenance.
+            {tx.about.diffBody}
           </p>
         </div>
 
@@ -52,9 +80,9 @@ export default function AboutPage() {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2.2" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
           <div>
-            <div style={{...P, fontSize:14, fontWeight:700, color:'#1C1007', marginBottom:6}}>Licensed & Fully Compliant</div>
+            <div style={{...P, fontSize:14, fontWeight:700, color:'#1C1007', marginBottom:6}}>{tx.about.licenseTitle}</div>
             <p style={{...P, fontSize:13.5, color:'#4A3728', lineHeight:1.75}}>
-              All Amusy locations in Washington State operate under our Master Amusement Operator License, issued by the Washington State Gambling Commission. We handle all required permits for every location we operate in.
+              {tx.about.licenseBody}
             </p>
           </div>
         </div>
@@ -69,37 +97,39 @@ export default function AboutPage() {
           }}
             onMouseEnter={e=>(e.currentTarget as HTMLElement).style.background='#e56ba8'}
             onMouseLeave={e=>(e.currentTarget as HTMLElement).style.background='#ff87c4'}
-          >Partner With Us →</Link>
+          >{tx.about.cta}</Link>
         </div>
 
       </main>
 
-      {/* ── BRAND BANNER at bottom of About page (#8) ── */}
+      {/* ── BRAND BANNER at bottom of About page ── */}
       <div style={{
-        background:'linear-gradient(135deg,#fff5f9 0%,#fff0f5 50%,#fff5f9 100%)',
-        padding:'64px 20px',
-        textAlign:'center',
+        position:'relative', overflow:'hidden',
+        background:'#fff5f9',
+        padding:'72px 20px', textAlign:'center',
         borderTop:'1px solid rgba(255,135,196,0.15)',
-        position:'relative',
-        overflow:'hidden',
       }}>
-        {/* Full Amusy watermark pattern */}
         <div style={{
-          position:'absolute', inset:0, opacity:0.09,
-          backgroundImage:`url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90'><text y='48' x='5' font-size='14' fill='%23ff87c4' font-family='sans-serif'>Amusy</text><circle cx='70' cy='20' r='8' fill='%23ff87c4'/><circle cx='15' cy='75' r='6' fill='%23ff87c4'/></svg>")`,
-          backgroundSize:'90px 90px',
+          position:'absolute', inset:0,
+          backgroundImage:'url("/images/client/bg-logo-transparent.png")',
+          backgroundSize:'700px',
+          backgroundRepeat:'repeat',
+          opacity: 0.30,
           pointerEvents:'none',
         }}/>
         <div style={{position:'relative', zIndex:1}}>
-          <img src="/images/amusy-logo.png" alt="Amusy"
-            style={{height:72, objectFit:'contain', display:'block', margin:'0 auto 12px'}}/>
-          <p style={{
-            ...P, fontSize:20, color:'#ff87c4', fontWeight:700, letterSpacing:'0.06em',
-          }}>Japanese Claw Machines</p>
+          <img src="/images/end-logo-transparent.png" alt="Amusy — Japanese Claw Machines"
+            style={{height:160,objectFit:'contain',display:'block',margin:'0 auto'}}/>
         </div>
       </div>
 
       <Footer/>
+
+      <style>{`
+        @media(max-width:700px){
+          .grid-2-about { grid-template-columns: 1fr !important; gap: 24px !important; }
+        }
+      `}</style>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LangProvider } from "./context/LangContext";
+import LangBlurOverlay from "./components/LangBlurOverlay";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://amusyentertainment.com'),
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
   description:"We partner with businesses by transforming their empty spaces with fun & lively claw machine setups. Zero cost to you.",
   keywords:["claw machine placement","Japanese claw machine","store revenue","passive income retail","branded prizes","Seattle entertainment","Washington state","amusy"],
   robots:{ index:true, follow:true },
+  icons: { icon: '/favicon.png', shortcut: '/favicon.png', apple: '/favicon.png' },
   openGraph:{ type:"website", url:"https://amusyentertainment.com", siteName:"Amusy Entertainment", title:"Amusy Entertainment", description:"Entertainment & new revenue stream that costs your store $0.", images:[{ url:"/images/machine-stackable.png" }] },
 };
 
@@ -21,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <LangProvider>
+          <LangBlurOverlay />
           {children}
         </LangProvider>
       </body>
