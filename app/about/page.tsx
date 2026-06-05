@@ -14,41 +14,24 @@ export default function AboutPage() {
     <div style={{background:'#FAFAF8', minHeight:'100vh'}}>
       <Navbar activePage="About"/>
 
-      {/* ── HERO BANNER with Amusy pattern background ── */}
+      {/* ── HERO BANNER ── */}
       <div style={{
-        position: 'relative',
         overflow: 'hidden',
-        background: '#fff5f9',
+        background: '#FAFAF8',
         paddingTop: 80,
         paddingBottom: 0,
         textAlign: 'center',
       }}>
-        {/* Amusy repeating pattern */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: 'url("/images/client/bg-logo-transparent.png")',
-          backgroundSize: '600px',
-          backgroundRepeat: 'repeat',
-          opacity: 0.35,
-          pointerEvents: 'none',
-        }}/>
-        {/* Soft radial pink glow in the centre */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,135,196,0.18) 0%, transparent 80%)',
-          pointerEvents: 'none',
-        }}/>
-        {/* About-amusy image sitting on top */}
-        <div style={{ position: 'relative', zIndex: 1, display: 'inline-block' }}>
+        {/* About-amusy image */}
+        <div style={{ display: 'inline-block' }}>
           <img
-            src="/images/client/about-amusy.png"
+            src="/images/client/about-amusy-transparent.png"
             alt="About Amusy"
             style={{
               maxWidth: 380,
               width: '100%',
               objectFit: 'contain',
               display: 'block',
-              filter: 'drop-shadow(0 16px 40px rgba(255,135,196,0.28))',
             }}
           />
         </div>
@@ -58,10 +41,10 @@ export default function AboutPage() {
 
         {/* ── Two column paragraphs ── */}
         <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, marginBottom:48 }} className="grid-2-about">
-          <p style={{...P, fontSize:16, color:'#4A3728', lineHeight:1.85, textAlign:'center'}}>
+          <p style={{...P, fontSize:18, color:'#4A3728', lineHeight:1.85, textAlign:'center'}}>
             {tx.about.col1}
           </p>
-          <p style={{...P, fontSize:16, color:'#4A3728', lineHeight:1.85, textAlign:'center'}}>
+          <p style={{...P, fontSize:18, color:'#4A3728', lineHeight:1.85, textAlign:'center'}}>
             {tx.about.col2}
           </p>
         </div>
@@ -74,18 +57,6 @@ export default function AboutPage() {
           </p>
         </div>
 
-        {/* ── Licensed & Compliant ── */}
-        <div style={{background:'#fff', border:'1px solid rgba(34,197,94,0.2)', borderRadius:20, padding:'24px 32px', display:'flex', alignItems:'flex-start', gap:16, marginBottom:40}}>
-          <div style={{width:40, height:40, borderRadius:'50%', background:'rgba(34,197,94,0.1)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0}}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2.2" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <div>
-            <div style={{...P, fontSize:14, fontWeight:700, color:'#1C1007', marginBottom:6}}>{tx.about.licenseTitle}</div>
-            <p style={{...P, fontSize:13.5, color:'#4A3728', lineHeight:1.75}}>
-              {tx.about.licenseBody}
-            </p>
-          </div>
-        </div>
 
         {/* ── Partner With Us button only ── */}
         <div style={{textAlign:'center'}}>
@@ -102,24 +73,23 @@ export default function AboutPage() {
 
       </main>
 
-      {/* ── BRAND BANNER at bottom of About page ── */}
+      {/* ── BOTTOM WALLPAPER + MACHINE PHOTO ── */}
       <div style={{
-        position:'relative', overflow:'hidden',
-        background:'#fff5f9',
-        padding:'72px 20px', textAlign:'center',
-        borderTop:'1px solid rgba(255,135,196,0.15)',
+        position: 'relative',
+        overflow: 'hidden',
+        width: '100%',
       }}>
         <div style={{
-          position:'absolute', inset:0,
-          backgroundImage:'url("/images/client/bg-logo-transparent.png")',
-          backgroundSize:'700px',
-          backgroundRepeat:'repeat',
-          opacity: 0.30,
-          pointerEvents:'none',
+          position: 'absolute', inset: 0,
+          backgroundImage: 'url("/images/client/bg-logo.png")',
+          backgroundSize: '400px',
+          backgroundRepeat: 'repeat',
+          opacity: 1,
+          pointerEvents: 'none',
         }}/>
-        <div style={{position:'relative', zIndex:1}}>
-          <img src="/images/end-logo-transparent.png" alt="Amusy — Japanese Claw Machines"
-            style={{height:160,objectFit:'contain',display:'block',margin:'0 auto'}}/>
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center', padding: '48px 20px' }}>
+          <img src="/images/client/about-bottom.png" alt="Amusy Machine Setup"
+            style={{ maxWidth: 700, width: '100%', objectFit: 'contain', display: 'block', borderRadius: 20 }}/>
         </div>
       </div>
 

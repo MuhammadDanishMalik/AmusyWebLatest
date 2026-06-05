@@ -56,6 +56,7 @@ export default function Footer() {
               [jp ? 'よくある質問' : 'FAQ',       'faq'],
               [jp ? 'お問い合わせ' : 'Contact',   'contact'],
               [jp ? '会社概要' : 'About Us',      'about'],
+              
             ] as [string,string][]).map(([label,id])=>(
               <button key={id} onClick={()=>label==='About Us'||label==='会社概要' ? window.location.href='/about' : scrollTo(id)}
                 style={{ ...P, display:'block', background:'none', border:'none', cursor:'pointer', fontSize:13, color:'#4A3728', padding:'4px 0', marginBottom:1, transition:'color 0.2s', textAlign:'left' }}

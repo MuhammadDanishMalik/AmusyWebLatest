@@ -555,7 +555,7 @@ const HERO_CARDS = [
 ];
 
 /* Falling toy icons in hero bg — continuous fall from top */
-const EMOJI_POOL = ['🕹️','🧸','🐾','✨','🎀','❤️','🌸','💫','🎮','🌟','🍬','🎊'];
+const EMOJI_POOL = ['🕹️','🧸','🌸','✨','🎏','💖','🎀','🐾'];
 const FALLING_TOYS = Array.from({ length: 22 }, (_, i) => ({
   icon: EMOJI_POOL[i % EMOJI_POOL.length],
   x: (i * 4.6 + (i % 3) * 2.1) % 96,
@@ -799,9 +799,9 @@ export default function Home() {
 
         {/* ── HERO ── */}
         <section id="hero" style={{
-          minHeight: '100vh', display: 'flex', flexDirection: 'column',
+          minHeight: '85vh', display: 'flex', flexDirection: 'column',
           justifyContent: 'center', alignItems: 'center',
-          paddingTop: 140, paddingBottom: 80,
+          paddingTop: 120, paddingBottom: 48,
           background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,135,196,0.13) 0%, rgba(255,200,220,0.06) 45%, var(--bg) 72%)',
           position: 'relative', overflow: 'hidden', textAlign: 'center',
         }}>
@@ -810,20 +810,26 @@ export default function Home() {
           {/* Soft radial glow */}
           <div style={{ position:'absolute', top:'10%', left:'50%', transform:'translateX(-50%)', width:800, height:500, background:'radial-gradient(ellipse,rgba(255,135,196,0.07) 0%,transparent 68%)', borderRadius:'50%', pointerEvents:'none' }}/>
 
-          <div className="container" style={{ maxWidth: 900, width: '100%' }}>
+          <div className="container" style={{ maxWidth: 900, width: '100%', textAlign: 'center' }}>
 
-            {/* ── Centered text ── */}
+            {/* ── Left-aligned hero text ── */}
             <div className="blur-in bi1" style={{ marginBottom: 8 }}>
               <div className="lbl" style={{ justifyContent: 'center' }}>
                 {lang === 'ja' ? '🎌 日本のクレーンゲーム設置' : 'Japanese Claw Machine Placement'}
               </div>
             </div>
 
-            <h1 className="h1" style={{ marginBottom: 20 }}>
-              <span className="blur-in bi2 hero-shimmer-heading" style={{ display: 'block' }}>
+            <h1 className="h1" style={{ marginBottom: 20, fontSize: 'clamp(28px,4vw,48px)' }}>
+              <span className="blur-in bi2" style={{ display: 'block', color: 'var(--ink)', whiteSpace: 'nowrap' }}>
                 {tx.hero.h1a} {tx.hero.h1b}
               </span>
             </h1>
+
+            <div style={{ marginBottom: 8, textAlign: 'center' }}>
+              <span style={{ display: 'block', color: 'var(--pink)', fontStyle: 'italic', fontWeight: 700, fontSize: 34, lineHeight: 1.06, whiteSpace: 'pre-wrap' }}>
+                {tx.hero.h1pink}
+              </span>
+            </div>
 
             <p className="blur-in bi4" style={{ fontSize: 20, lineHeight: 1.8, color: 'var(--ink2)', maxWidth: 620, margin: '0 auto 32px', ...P }}>
               {tx.hero.sub}
@@ -839,14 +845,42 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── LOGO TICKER ── */}
+        <div style={{
+          borderTop:'1px solid var(--border)',
+          borderBottom:'1px solid var(--border)',
+          background:'var(--white)',
+          overflow:'hidden',
+          height:78,
+        }}>
+          <div style={{
+            display:'flex',
+            alignItems:'center',
+            height:'100%',
+            width:'max-content',
+            animation:'logoSlide 180s linear infinite',
+            marginTop: -12,
+          }}>
+            {[...Array(8)].map((_,i)=>(
+              <img key={i} src="/images/client/logo-wrap.png" alt="Amusy"
+                style={{
+                  height:500,
+                  width:'auto',
+                  flexShrink:0,
+                  display:'block',
+                  opacity:0.85,
+                }} />
+            ))}
+          </div>
+        </div>
+
         {/* ── SHORT ABOUT US ── */}
         <section id="about-short" className="section" style={{ background: 'var(--bg2)', paddingTop: 'clamp(48px,6vw,80px)', paddingBottom: 'clamp(48px,6vw,80px)' }}>
           <div className="container" style={{ maxWidth: 800, textAlign: 'center' }}>
             <div className="reveal">
               <div className="lbl" style={{ justifyContent: 'center', marginBottom: 14 }}>{tx.aboutShort.label}</div>
-              <ScribbleDeco color="#ff87c4" width={64} />
               <h2 className="h2" style={{ marginBottom: 16 }}>
-                <>{tx.aboutShort.h2a}<BrushHighlight>{tx.aboutShort.h2hl}</BrushHighlight>{tx.aboutShort.h2b}</>
+                <>{tx.aboutShort.h2a}{tx.aboutShort.h2hl}{tx.aboutShort.h2b}</>
               </h2>
               <p style={{ fontSize: 16, color: 'var(--ink2)', lineHeight: 1.8, maxWidth: 640, margin: '0 auto', ...P }}>
                 {tx.aboutShort.body}
@@ -922,41 +956,14 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── LOGO TICKER ── */}
-        <div style={{
-          borderTop:'1px solid var(--border)',
-          borderBottom:'1px solid var(--border)',
-          background:'var(--white)',
-          overflow:'hidden',
-          height:78,
-        }}>
-          <div style={{
-            display:'flex',
-            alignItems:'center',
-            height:'100%',
-            width:'max-content',
-            animation:'logoSlide 45s linear infinite',
-            marginTop: -12,
-          }}>
-            {[...Array(8)].map((_,i)=>(
-              <img key={i} src="/images/client/logo-wrap.png" alt="Amusy"
-                style={{
-                  height:500,
-                  width:'auto',
-                  flexShrink:0,
-                  display:'block',
-                  opacity:0.85,
-                }} />
-            ))}
-          </div>
-        </div>
+
 
         {/* ── SETUP EXAMPLES (REVENUE TABS) ── */}
         <section id="revenue" className="section" style={{position:'relative', overflow:'hidden'}}>
           {/* Amusy pattern background */}
           <div style={{
             position:'absolute', inset:0,
-            backgroundImage:'url("/images/client/bg-logo-transparent.png")',
+            backgroundImage:'url("/images/client/bg-logo.png")',
             backgroundSize:'700px',
             backgroundRepeat:'repeat',
             opacity: 0.25,
@@ -965,10 +972,9 @@ export default function Home() {
           <div className="container" style={{position:'relative', zIndex:1}}>
             <div className="reveal" style={{maxWidth:580,marginBottom:44}}>
               <div className="lbl" style={{marginBottom:14}}>{tx.setup.label}</div>
-              <ScribbleDeco />
               <h2 className="h2" style={{marginBottom:12}}>
                 {tx.setup.h2a}
-                <BrushHighlight>{tx.setup.h2hl}</BrushHighlight>
+                {tx.setup.h2hl}
               </h2>
               <p style={{fontSize:14.5,color:'var(--ink2)',lineHeight:1.75,...P}}>{tx.setup.sub}</p>
             </div>
@@ -980,23 +986,13 @@ export default function Home() {
               </div>
             </div>
             <motion.div key={revKey} initial={{opacity:0,y:14}} animate={{opacity:1,y:0}} transition={{duration:0.35,ease:[0.16,1,0.3,1]}}
-              style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:40,alignItems:'center'}} className="grid-2"
+              style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,alignItems:'stretch'}}
             >
-              <div>
-                <h3 className="h3" style={{marginBottom:12}}>{tx.setup.tabContent[revTab].headline}</h3>
-                <p style={{fontSize:14.5,color:'var(--ink2)',lineHeight:1.8,marginBottom:18,...P}}>{tx.setup.tabContent[revTab].body}</p>
-                <p style={{fontSize:12,color:'var(--ink3)',fontStyle:'italic',marginBottom:26,...P}}>{tx.setup.tabContent[revTab].note}</p>
-                <button className="btn btn-dark" onClick={()=>go('contact')}>
-                  <span style={{position:'relative',zIndex:1}}>{tx.setup.cta}</span>
-                </button>
-              </div>
-              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-                {td.imgs.map((img,si)=>(
-                  <div key={si} style={{borderRadius:16, overflow:'hidden', boxShadow:'var(--sh-sm)', height: 220}}>
-                    <img src={img} alt="Location" style={{width:'100%', height:'100%', objectFit:'cover', display:'block'}} />
-                  </div>
-                ))}
-              </div>
+              {td.imgs.map((img,si)=>(
+                <div key={si} style={{borderRadius:20, overflow:'hidden', boxShadow:'var(--sh-md)', height: 340}}>
+                  <img src={img} alt="Location" style={{width:'100%', height:'100%', objectFit:'cover', display:'block'}} />
+                </div>
+              ))}
             </motion.div>
           </div>
         </section>
@@ -1007,8 +1003,7 @@ export default function Home() {
           <div className="container">
             <div className="reveal" style={{marginBottom:60}}>
               <div className="lbl" style={{marginBottom:14}}>{tx.howItWorks.label}</div>
-              <ScribbleDeco />
-              <h2 className="h2"><>{tx.howItWorks.h2a}<BrushHighlight>{tx.howItWorks.h2hl}</BrushHighlight></></h2>
+              <h2 className="h2"><>{tx.howItWorks.h2a}{tx.howItWorks.h2hl}</></h2>
             </div>
 
             {/* Steps — proper responsive layout */}
@@ -1039,7 +1034,7 @@ export default function Home() {
             <div className="reveal" style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', flexWrap:'wrap', gap:16 }}>
               <div>
                 <div className="lbl" style={{ marginBottom:14 }}>{tx.videos.label}</div>
-                <h2 className="h2"><><BrushHighlight>{tx.videos.h2a}</BrushHighlight>{tx.videos.h2b}</></h2>
+                <h2 className="h2"><>{tx.videos.h2a}{tx.videos.h2b}</></h2>
                 <p style={{ marginTop:10, fontSize:14, color:'var(--ink2)', fontFamily:"'Montserrat',sans-serif" }}>
                   {tx.videos.hint}
                 </p>
@@ -1075,7 +1070,7 @@ export default function Home() {
           {/* Amusy pattern background */}
           <div style={{
             position:'absolute', inset:0,
-            backgroundImage:'url("/images/client/bg-logo-transparent.png")',
+            backgroundImage:'url("/images/client/bg-logo.png")',
             backgroundSize:'700px',
             backgroundRepeat:'repeat',
             opacity: 0.25,
@@ -1084,8 +1079,7 @@ export default function Home() {
           <div className="container" style={{position:'relative', zIndex:1}}>
             <div className="reveal" style={{ textAlign: 'left', marginBottom: 56 }}>
               <div className="lbl" style={{ justifyContent: 'flex-start', marginBottom: 14 }}>{tx.benefits.label}</div>
-              <ScribbleDeco color="#ff87c4" width={64} />
-              <h2 className="h2">{lang === 'ja' ? 'なぜ' : 'Why '}<BrushHighlight>{lang === 'ja' ? 'Amusyなのか？' : 'Amusy?'}</BrushHighlight></h2>
+              <h2 className="h2">{lang === 'ja' ? 'なぜ' : 'Why '}{lang === 'ja' ? 'Amusyなのか？' : 'Amusy?'}</h2>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }} className="grid-2">
@@ -1118,7 +1112,7 @@ export default function Home() {
             <div className="reveal" style={{ maxWidth: 580, marginBottom: 56 }}>
               <div className="lbl" style={{ marginBottom: 14 }}>{tx.machineTypes.label}</div>
               <h2 className="h2" style={{ marginBottom: 12 }}>
-                {<>{tx.machineTypes.h2a}<br/><BrushHighlight>{tx.machineTypes.h2hl}</BrushHighlight></>}
+                {<>{tx.machineTypes.h2a}<br/>{tx.machineTypes.h2hl}</>}
               </h2>
               <p style={{ fontSize: 14.5, color: 'var(--ink2)', lineHeight: 1.75, fontFamily: "'Montserrat',sans-serif" }}>
                 {tx.machineTypes.sub}
@@ -1128,13 +1122,41 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── LOGO TICKER (after machine types) ── */}
+        <div style={{
+          borderTop:'1px solid var(--border)',
+          borderBottom:'1px solid var(--border)',
+          background:'var(--white)',
+          overflow:'hidden',
+          height:78,
+        }}>
+          <div style={{
+            display:'flex',
+            alignItems:'center',
+            height:'100%',
+            width:'max-content',
+            animation:'logoSlide 180s linear infinite',
+            marginTop: -12,
+          }}>
+            {[...Array(8)].map((_,i)=>(
+              <img key={i} src="/images/client/logo-wrap.png" alt="Amusy"
+                style={{
+                  height:500,
+                  width:'auto',
+                  flexShrink:0,
+                  display:'block',
+                  opacity:0.85,
+                }} />
+            ))}
+          </div>
+        </div>
+
         {/* ── PRIZES ── */}
         <section id="prizes" className="section" style={{background:'var(--bg2)'}}>
           <div className="container">
             <div className="reveal" style={{marginBottom:40}}>
               <div className="lbl" style={{marginBottom:14}}>{tx.prizes.label}</div>
-              <ScribbleDeco />
-              <h2 className="h2"><>{tx.prizes.h2a}<BrushHighlight>{tx.prizes.h2hl}</BrushHighlight></></h2>
+              <h2 className="h2"><>{tx.prizes.h2a}{tx.prizes.h2hl}</></h2>
               <p style={{marginTop:12,fontSize:15,color:'var(--ink2)',maxWidth:560,...P}}>
                 {tx.prizes.sub}
               </p>
@@ -1153,6 +1175,21 @@ export default function Home() {
                 </motion.div>
               ))}
             </div>
+            {/* Second row: specific prizes #10, #20, #11, #16 */}
+            <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:14,marginTop:14}} className="grid-4 reveal d2">
+              {['/images/client/prize-10.jpg','/images/client/prize-20.jpg','/images/client/prize-11.jpg','/images/client/prize-16.jpg'].map((img,i)=>(
+                <motion.div key={i+8}
+                  initial={{opacity:0,y:20,scale:0.95}}
+                  whileInView={{opacity:1,y:0,scale:1}}
+                  viewport={{once:true}}
+                  transition={{duration:0.5,delay:i*0.06,ease:[0.16,1,0.3,1]}}
+                  whileHover={{scale:1.04,zIndex:2,transition:{duration:0.2}}}
+                  style={{aspectRatio:'1',borderRadius:16,overflow:'hidden',boxShadow:'var(--sh-sm)',background:'#fff'}}
+                >
+                  <img src={img} alt="Prize" loading="lazy" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -1160,7 +1197,7 @@ export default function Home() {
           {/* Amusy pattern background */}
           <div style={{
             position:'absolute', inset:0,
-            backgroundImage:'url("/images/client/bg-logo-transparent.png")',
+            backgroundImage:'url("/images/client/bg-logo.png")',
             backgroundSize:'700px',
             backgroundRepeat:'repeat',
             opacity: 0.25,
@@ -1181,7 +1218,7 @@ export default function Home() {
                 fontWeight: 700, lineHeight: 1.1,
                 letterSpacing: '-0.025em', color: 'var(--ink)',
               }}>
-                {<>{tx.faq.h2a} <BrushHighlight>{tx.faq.h2b}</BrushHighlight></>}
+                {<>{tx.faq.h2a} {tx.faq.h2b}</>}
               </h2>
               <p style={{ marginTop: 14, fontSize: 15, color: 'var(--ink3)', fontFamily: "'Montserrat',sans-serif" }}>
                 {tx.faq.sub}
@@ -1287,7 +1324,7 @@ export default function Home() {
           <div className="container" style={{maxWidth:600,margin:'0 auto'}}>
             <div className="reveal" style={{marginBottom:40}}>
               <div className="lbl" style={{marginBottom:14}}>{tx.contact.label}</div>
-              <h2 className="h2"><><ScribbleDeco width={48} />{lang === 'ja' ? 'お問い合わせ' : "Let's talk."}</></h2>
+              <h2 className="h2">{lang === 'ja' ? 'お問い合わせ' : "Let's talk."}</h2>
             </div>
             <div className="reveal d1" style={{background:'#fff',border:'1px solid var(--border)',borderRadius:22,padding:'clamp(22px,4vw,42px)',boxShadow:'var(--sh-sm)'}}>
               <form onSubmit={e=>e.preventDefault()} style={{display:'flex',flexDirection:'column',gap:13}} noValidate>
@@ -1319,24 +1356,25 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── BRAND BANNER ── */}
+
+
+        {/* ── BRAND WALLPAPER ── */}
         <section style={{
           position:'relative', overflow:'hidden',
-          background:'#fff5f9',
-          padding:'72px 20px', textAlign:'center',
-          borderTop:'1px solid rgba(255,135,196,0.15)',
+          width:'100%',
+          textAlign:'center',
         }}>
           <div style={{
             position:'absolute', inset:0,
-            backgroundImage:'url("/images/client/bg-logo-transparent.png")',
-            backgroundSize:'700px',
+            backgroundImage:'url("/images/client/bg-logo.png")',
+            backgroundSize:'400px',
             backgroundRepeat:'repeat',
-            opacity: 0.30,
+            opacity: 1,
             pointerEvents:'none',
           }}/>
-          <div style={{position:'relative', zIndex:1}}>
+          <div style={{position:'relative', zIndex:1, padding:'72px 20px'}}>
             <img src="/images/end-logo-transparent.png" alt="Amusy — Japanese Claw Machines"
-              style={{height:160,objectFit:'contain',display:'block',margin:'0 auto'}}/>
+              style={{height:180,objectFit:'contain',display:'block',margin:'0 auto'}}/>
           </div>
         </section>
 
