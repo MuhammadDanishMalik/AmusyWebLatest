@@ -13,7 +13,7 @@ const TAB_DATA = [
   { tab:'Restaurant', headline:'Keep diners entertained, longer.', body:"Guests waiting for tables or finishing meals spend time at the machine. Average table turn time stays the same — but customers leave happier and spend more.", imgs:['/images/client/restaurant-1.jpg', '/images/client/restaurant-2.jpg'], note:'Ideal for : Casual dining, Dessert shops, Boba Tea Shops, Food courts, Bars' },
   { tab:'Retail Store', headline:'Drive foot traffic and repeat visits.', body:"Customers return to your store specifically to try the machine — and they browse while they're there. The machine pays for itself and then some.", imgs:['/images/client/retail-1.jpg', '/images/client/retail-2.jpg'], note:'Ideal for : gift shops, hobby stores, anime stores' },
   { tab:'Shopping Mall', headline:'Activate unused floor space.', body:'Empty corners and transition areas become revenue-generating attractions. Our machines are compact, striking, and maintained at our expense.', imgs:['/images/client/mall-1.jpg', '/images/client/mall-2.jpg'], note:'Ideal for : market entrances, foodcourt area, hallways' },
-  { tab:'Market', headline:'Bring excitement to high-traffic spaces.', body:'Markets and food halls attract crowds looking for something new. Our machines create a natural gathering point — customers linger longer and spend more.', imgs:['/images/client/market-1.jpg', '/images/client/mall-1.jpg'], note:'Ideal for : market entrances, foodcourt area, hallways' },
+  { tab:'Market', headline:'Bring excitement to high-traffic spaces.', body:'Markets and food halls attract crowds looking for something new. Our machines create a natural gathering point — customers linger longer and spend more.', imgs:['/images/client/market-1.jpg', '/images/client/mall-2.jpg'], note:'Ideal for : market entrances, foodcourt area, hallways' },
 ];
 
 const MACHINES = [
@@ -560,66 +560,12 @@ const FALLING_TOYS = Array.from({ length: 22 }, (_, i) => ({
   icon: EMOJI_POOL[i % EMOJI_POOL.length],
   x: (i * 4.6 + (i % 3) * 2.1) % 96,
   size: 16 + (i % 5) * 4,
-  dur: 7 + (i % 7) * 1.4,
+  dur: 14 + (i % 7) * 2.8,
   delay: -(i * 0.85) % 9,
   sway: (i % 2 === 0 ? 1 : -1) * (8 + (i % 4) * 5),
 }));
 
-/* ── SPARK BURST — tiny glowing particles that shoot out on emoji impact ── */
-const SPARK_COLORS = ['#ff87c4','#FFD166','#fff','#FF6EB0','#C9F','#FFB347'];
-const SPARK_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315];
-
-interface Spark { id: number; x: number; }
-
-function SparkBurst({ x }: { x: number }) {
-  return (
-    <div style={{
-      position: 'absolute',
-      left: `${x}%`,
-      bottom: '14%',
-      pointerEvents: 'none',
-      zIndex: 10,
-    }}>
-      {SPARK_ANGLES.map((angle, i) => {
-        const rad = (angle * Math.PI) / 180;
-        const dist = 14 + (i % 3) * 9;
-        const size = 4 + (i % 3) * 2;
-        const col = SPARK_COLORS[i % SPARK_COLORS.length];
-        return (
-          <motion.div
-            key={i}
-            initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
-            animate={{
-              x: Math.cos(rad) * dist,
-              y: Math.sin(rad) * dist - 12,
-              opacity: 0,
-              scale: 0.15,
-            }}
-            transition={{ duration: 0.55, ease: 'easeOut', delay: i * 0.02 }}
-            style={{
-              position: 'absolute',
-              width: size,
-              height: size,
-              borderRadius: '50%',
-              background: col,
-              boxShadow: `0 0 6px 2px ${col}`,
-            }}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
 function HeroFloatingToys() {
-  const [sparks, setSparks] = useState<Spark[]>([]);
-
-  const addSpark = useCallback((x: number) => {
-    const id = Date.now() + Math.random();
-    setSparks(prev => [...prev.slice(-50), { id, x }]);
-    setTimeout(() => setSparks(prev => prev.filter(s => s.id !== id)), 680);
-  }, []);
-
   return (
     <div style={{ position:'absolute', inset:0, pointerEvents:'none', overflow:'hidden' }}>
       {FALLING_TOYS.map((t, i) => (
@@ -636,15 +582,9 @@ function HeroFloatingToys() {
             animation: `heroEmojiFall ${t.dur}s ${t.delay}s linear infinite`,
             '--sway': `${t.sway}px`,
           } as React.CSSProperties}
-          onAnimationIteration={() => addSpark(t.x)}
         >
           {t.icon}
         </div>
-      ))}
-
-      {/* Sparkle bursts rendered at bottom when each emoji completes a fall */}
-      {sparks.map(s => (
-        <SparkBurst key={s.id} x={s.x} />
       ))}
     </div>
   );
@@ -956,7 +896,32 @@ export default function Home() {
           </div>
         </section>
 
-
+        {/* ── PRIZE PREVIEW (after machine showcase) ── */}
+        <section id="prize-preview" className="section" style={{ background: 'var(--bg2)', paddingTop: 'clamp(48px,6vw,80px)', paddingBottom: 'clamp(48px,6vw,80px)' }}>
+          <div className="container">
+            <div className="reveal" style={{ textAlign: 'center', marginBottom: 40 }}>
+              <div className="lbl" style={{ justifyContent: 'center', marginBottom: 14 }}>{tx.prizes.label}</div>
+              <h2 className="h2"><>{tx.prizes.h2a}{tx.prizes.h2hl}</></h2>
+              <p style={{ marginTop: 12, fontSize: 15, color: 'var(--ink2)', maxWidth: 560, margin: '12px auto 0', fontFamily: "'Montserrat',sans-serif" }}>
+                {tx.prizes.sub}
+              </p>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }} className="grid-4 reveal d1">
+              {ALL_PRIZES.slice(0, 8).map((img, i) => (
+                <motion.div key={i}
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{ scale: 1.04, zIndex: 2, transition: { duration: 0.2 } }}
+                  style={{ aspectRatio: '1', borderRadius: 16, overflow: 'hidden', boxShadow: 'var(--sh-sm)', background: '#fff' }}
+                >
+                  <img src={img} alt="Prize" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* ── SETUP EXAMPLES (REVENUE TABS) ── */}
         <section id="revenue" className="section" style={{position:'relative', overflow:'hidden'}}>
@@ -964,8 +929,9 @@ export default function Home() {
           <div style={{
             position:'absolute', inset:0,
             backgroundImage:'url("/images/client/bg-logo.png")',
-            backgroundSize:'700px',
+            backgroundSize:'550px',
             backgroundRepeat:'repeat',
+            backgroundPosition:'0 0',
             opacity: 0.25,
             pointerEvents:'none',
           }}/>
@@ -989,7 +955,7 @@ export default function Home() {
               style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,alignItems:'stretch'}}
             >
               {td.imgs.map((img,si)=>(
-                <div key={si} style={{borderRadius:20, overflow:'hidden', boxShadow:'var(--sh-md)', height: 340}}>
+                <div key={si} style={{borderRadius:20, overflow:'hidden', boxShadow:'var(--sh-md)', height: 480}}>
                   <img src={img} alt="Location" style={{width:'100%', height:'100%', objectFit:'cover', display:'block'}} />
                 </div>
               ))}
@@ -1071,8 +1037,9 @@ export default function Home() {
           <div style={{
             position:'absolute', inset:0,
             backgroundImage:'url("/images/client/bg-logo.png")',
-            backgroundSize:'700px',
+            backgroundSize:'550px',
             backgroundRepeat:'repeat',
+            backgroundPosition:'0 0',
             opacity: 0.25,
             pointerEvents:'none',
           }}/>
@@ -1198,8 +1165,9 @@ export default function Home() {
           <div style={{
             position:'absolute', inset:0,
             backgroundImage:'url("/images/client/bg-logo.png")',
-            backgroundSize:'700px',
+            backgroundSize:'550px',
             backgroundRepeat:'repeat',
+            backgroundPosition:'0 0',
             opacity: 0.25,
             pointerEvents:'none',
           }}/>

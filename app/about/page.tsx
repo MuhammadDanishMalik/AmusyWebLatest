@@ -11,30 +11,28 @@ export default function AboutPage() {
   const { lang } = useLang();
   const tx = lang === 'ja' ? t.ja : t.en;
   return (
-    <div style={{background:'#FAFAF8', minHeight:'100vh'}}>
+    <div style={{background:'#ffffff', minHeight:'100vh'}}>
       <Navbar activePage="About"/>
 
       {/* ── HERO BANNER ── */}
       <div style={{
-        overflow: 'hidden',
-        background: '#FAFAF8',
-        paddingTop: 80,
+        background: '#ffffff',
+        paddingTop: 100,
         paddingBottom: 0,
         textAlign: 'center',
+        position: 'relative',
       }}>
-        {/* About-amusy image */}
-        <div style={{ display: 'inline-block' }}>
-          <img
-            src="/images/client/about-amusy-transparent.png"
-            alt="About Amusy"
-            style={{
-              maxWidth: 380,
-              width: '100%',
-              objectFit: 'contain',
-              display: 'block',
-            }}
-          />
-        </div>
+        <img
+          src="/images/client/about-us-hero.png"
+          alt="About Amusy — Japanese Claw Machines"
+          style={{
+            maxWidth: 800,
+            width: '95%',
+            objectFit: 'contain',
+            display: 'block',
+            margin: '0 auto',
+          }}
+        />
       </div>
 
       <main style={{maxWidth:900, margin:'0 auto', padding:'52px clamp(20px,4vw,48px) 80px'}}>
@@ -81,9 +79,10 @@ export default function AboutPage() {
       }}>
         <div style={{
           position: 'absolute', inset: 0,
-          backgroundImage: 'url("/images/client/bg-logo.png")',
-          backgroundSize: '400px',
+          backgroundImage: 'url("/images/client/updated-wallpaper.jpg")',
+          backgroundSize: '550px',
           backgroundRepeat: 'repeat',
+          backgroundPosition: '0 0',
           opacity: 1,
           pointerEvents: 'none',
         }}/>
