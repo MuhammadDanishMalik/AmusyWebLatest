@@ -13,7 +13,7 @@ const TAB_DATA = [
   { tab:'Restaurant', headline:'Keep diners entertained, longer.', body:"Guests waiting for tables or finishing meals spend time at the machine. Average table turn time stays the same — but customers leave happier and spend more.", imgs:['/images/client/restaurant-1.jpg', '/images/client/restaurant-2.jpg'], note:'Ideal for : Casual dining, Dessert shops, Boba Tea Shops, Food courts, Bars' },
   { tab:'Retail Store', headline:'Drive foot traffic and repeat visits.', body:"Customers return to your store specifically to try the machine — and they browse while they're there. The machine pays for itself and then some.", imgs:['/images/client/retail-1.jpg', '/images/client/retail-2.jpg'], note:'Ideal for : gift shops, hobby stores, anime stores' },
   { tab:'Shopping Mall', headline:'Activate unused floor space.', body:'Empty corners and transition areas become revenue-generating attractions. Our machines are compact, striking, and maintained at our expense.', imgs:['/images/client/mall-1.jpg', '/images/client/mall-2.jpg'], note:'Ideal for : market entrances, foodcourt area, hallways' },
-  { tab:'Market', headline:'Bring excitement to high-traffic spaces.', body:'Markets and food halls attract crowds looking for something new. Our machines create a natural gathering point — customers linger longer and spend more.', imgs:['/images/client/market-1.jpg', '/images/client/mall-2.jpg'], note:'Ideal for : market entrances, foodcourt area, hallways' },
+  { tab:'Market', headline:'Bring excitement to high-traffic spaces.', body:'Markets and food halls attract crowds looking for something new. Our machines create a natural gathering point — customers linger longer and spend more.', imgs:['/images/client/market-1.jpg', '/images/client/market-2.jpg'], note:'Ideal for : market entrances, foodcourt area, hallways' },
 ];
 
 const MACHINES = [
@@ -928,11 +928,11 @@ export default function Home() {
           {/* Amusy pattern background */}
           <div style={{
             position:'absolute', inset:0,
-            backgroundImage:'url("/images/client/bg-logo.png")',
-            backgroundSize:'550px',
-            backgroundRepeat:'repeat',
-            backgroundPosition:'0 0',
-            opacity: 0.25,
+            backgroundImage:'url("/images/client/updated-wallpaper.jpg")',
+            backgroundSize:'cover',
+            backgroundRepeat:'no-repeat',
+            backgroundPosition:'center',
+            opacity: 0.12,
             pointerEvents:'none',
           }}/>
           <div className="container" style={{position:'relative', zIndex:1}}>
@@ -1036,11 +1036,11 @@ export default function Home() {
           {/* Amusy pattern background */}
           <div style={{
             position:'absolute', inset:0,
-            backgroundImage:'url("/images/client/bg-logo.png")',
-            backgroundSize:'550px',
-            backgroundRepeat:'repeat',
-            backgroundPosition:'0 0',
-            opacity: 0.25,
+            backgroundImage:'url("/images/client/updated-wallpaper.jpg")',
+            backgroundSize:'cover',
+            backgroundRepeat:'no-repeat',
+            backgroundPosition:'center',
+            opacity: 0.12,
             pointerEvents:'none',
           }}/>
           <div className="container" style={{position:'relative', zIndex:1}}>
@@ -1164,11 +1164,11 @@ export default function Home() {
           {/* Amusy pattern background */}
           <div style={{
             position:'absolute', inset:0,
-            backgroundImage:'url("/images/client/bg-logo.png")',
-            backgroundSize:'550px',
-            backgroundRepeat:'repeat',
-            backgroundPosition:'0 0',
-            opacity: 0.25,
+            backgroundImage:'url("/images/client/updated-wallpaper.jpg")',
+            backgroundSize:'cover',
+            backgroundRepeat:'no-repeat',
+            backgroundPosition:'center',
+            opacity: 0.12,
             pointerEvents:'none',
           }}/>
           <div className="container" style={{ maxWidth: 820, margin: '0 auto', position:'relative', zIndex:1 }}>
@@ -1334,15 +1334,30 @@ export default function Home() {
         }}>
           <div style={{
             position:'absolute', inset:0,
-            backgroundImage:'url("/images/client/bg-logo.png")',
-            backgroundSize:'400px',
-            backgroundRepeat:'repeat',
-            opacity: 1,
+            backgroundImage:'url("/images/client/updated-wallpaper.jpg")',
+            backgroundSize:'cover',
+            backgroundRepeat:'no-repeat',
+            backgroundPosition:'center',
+            opacity: 0.12,
             pointerEvents:'none',
           }}/>
-          <div style={{position:'relative', zIndex:1, padding:'72px 20px'}}>
-            <img src="/images/end-logo-transparent.png" alt="Amusy — Japanese Claw Machines"
-              style={{height:180,objectFit:'contain',display:'block',margin:'0 auto'}}/>
+          {/* Single machine photo over background */}
+          <div style={{
+            position:'relative', zIndex:1,
+            padding:'40px 20px',
+            display:'flex', justifyContent:'center', alignItems:'center',
+          }}>
+            <img
+              src="/images/client/machine-photo.jpg"
+              alt="Amusy Machine Setup"
+              style={{
+                maxWidth: 520,
+                width: '90%',
+                objectFit:'contain', display:'block',
+                borderRadius: 20,
+                boxShadow:'0 24px 60px rgba(0,0,0,0.22)',
+              }}
+            />
           </div>
         </section>
 

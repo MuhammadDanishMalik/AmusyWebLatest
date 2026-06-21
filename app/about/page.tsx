@@ -78,16 +78,20 @@ export default function AboutPage() {
         width: '100%',
       }}>
         <div style={{
-          position: 'absolute', inset: 0,
+          position: 'absolute',
+          top: 0, left: '50%',
+          transform: 'translateX(-50%)',
+          width: '100vw',
+          height: '100%',
           backgroundImage: 'url("/images/client/updated-wallpaper.jpg")',
-          backgroundSize: '550px',
-          backgroundRepeat: 'repeat',
-          backgroundPosition: '0 0',
-          opacity: 1,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          opacity: 0.12,
           pointerEvents: 'none',
         }}/>
         <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center', padding: '48px 20px' }}>
-          <img src="/images/client/about-bottom.png" alt="Amusy Machine Setup"
+          <img src="/images/client/about-bottom.jpg" alt="Amusy Machine Setup"
             style={{ maxWidth: 700, width: '100%', objectFit: 'contain', display: 'block', borderRadius: 20 }}/>
         </div>
       </div>
