@@ -91,6 +91,24 @@ body:not(.lang-switching) button {
   96%  { opacity: 0; }
   100% { transform: translateY(95vh)  translateX(0px)                     rotate(0deg); opacity: 0; }
 }
+/* Reduce emoji opacity on mobile for a cleaner look */
+@media (max-width: 767px) {
+  .hero-emoji-fall {
+    opacity: 0.08 !important;
+  }
+}
+
+/* ── SHIMMER LOADING ── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-box {
+  background: linear-gradient(90deg, #f0ede9 25%, #e8e4df 50%, #f0ede9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: inherit;
+}
 
 /* ── BLUR-IN ── */
 @keyframes blurIn {
@@ -488,3 +506,150 @@ a { color: inherit; text-decoration: none; }
   .fan-item:nth-child(4) { transform: rotate(9deg) translate(110px,13px); }
   .fan-row { height: 230px; }
 }
+
+/* ════════════════════════════════════════
+   MOBILE RESPONSIVENESS — comprehensive
+   ════════════════════════════════════════ */
+@media (max-width: 767px) {
+
+  /* ── Hero section ── */
+  #hero {
+    padding-top: 90px !important;
+    padding-bottom: 32px !important;
+    min-height: auto !important;
+  }
+  #hero h1,
+  #hero .h1 {
+    font-size: clamp(22px, 7vw, 32px) !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+  #hero p {
+    font-size: 15px !important;
+    padding: 0 4px !important;
+  }
+  /* Pink italic headline */
+  #hero span[style*="italic"] {
+    font-size: clamp(22px, 7vw, 34px) !important;
+    white-space: normal !important;
+  }
+
+  /* ── Machine showcase fan (overlapping cards) ── */
+  #machine-showcase .container > div > div:first-child {
+    overflow: visible;
+  }
+  /* Make the overlapping machine card fan smaller on mobile */
+  #machine-showcase [style*="clamp(160px"] {
+    width: clamp(100px, 22vw, 160px) !important;
+    height: clamp(130px, 28vw, 200px) !important;
+  }
+
+  /* ── MachineFan section (machine types) ── */
+  /* Scrollable horizontal carousel on mobile instead of overflow */
+  #machines .container {
+    overflow: visible;
+  }
+  /* Make the 4-card fan row scroll horizontally on mobile */
+  .machine-fan-row {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 8px !important;
+  }
+  .machine-fan-row::-webkit-scrollbar { display: none; }
+
+  /* Shrink MachineFan cards on mobile */
+  .machine-fan-card {
+    width: 140px !important;
+    height: 190px !important;
+  }
+
+  /* ── MachineFan spec panel → 2×2 grid ── */
+  .spec-panel-grid {
+    grid-template-columns: 1fr 1fr !important;
+    padding: 20px 16px !important;
+  }
+  .spec-panel-grid > div:first-child {
+    grid-column: span 2 !important;
+  }
+  .spec-panel-grid > div:last-child {
+    grid-column: span 2 !important;
+  }
+  .spec-panel-note {
+    grid-column: span 2 !important;
+  }
+
+  /* ── Revenue tabs images → single column ── */
+  .revenue-img-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .revenue-img-item {
+    height: 240px !important;
+  }
+
+  /* ── Benefits grid → 1 column ── */
+  .benefits-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* ── Video scroll — smaller cards ── */
+  .video-scroll-track {
+    padding: 12px 20px 16px !important;
+    gap: 12px !important;
+  }
+
+  /* ── Section padding ── */
+  .section {
+    padding: clamp(44px, 8vw, 80px) 0 !important;
+  }
+  .container {
+    padding: 0 16px !important;
+  }
+
+  /* ── h2 headings ── */
+  .h2 {
+    font-size: clamp(22px, 6vw, 36px) !important;
+  }
+
+  /* ── FAQ floating icons — fewer and smaller ── */
+  .faq-floating-icon {
+    display: none;
+  }
+
+  /* ── Navbar scrolled pill — full width on mobile ── */
+  .navbar.scrolled {
+    width: calc(100% - 24px) !important;
+    left: 12px !important;
+    right: 12px !important;
+    transform: none !important;
+  }
+
+  /* ── Prize grids — 2 col already set, ensure border-radius smaller ── */
+  .grid-4 > div {
+    border-radius: 12px !important;
+  }
+
+  /* ── Contact section ── */
+  #contact [style*="gridTemplateColumns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── Logo ticker height ── */
+  [style*="height:78"] {
+    height: 54px !important;
+  }
+}
+
+/* ── Very small phones ── */
+@media (max-width: 390px) {
+  #hero h1, #hero .h1 {
+    font-size: 20px !important;
+  }
+  #hero span[style*="italic"] {
+    font-size: 20px !important;
+  }
+  .h2 { font-size: 20px !important; }
+  .container { padding: 0 12px !important; }
+}
+

@@ -148,30 +148,32 @@ export default function Navbar({ activePage = '' }: { activePage?: string }) {
         {/* ── Right side ── */}
         <div style={{display:'flex',alignItems:'center',gap:12}}>
 
-          {/* EN / JP iOS segmented pill — matches client PDF */}
-          <div style={{
-            display:'flex', alignItems:'center',
-            background:'rgba(120,100,90,0.10)',
-            borderRadius:50, padding:3,
-            boxShadow:'inset 0 1px 3px rgba(0,0,0,0.10)',
-          }}>
-            {(['EN','JP'] as const).map(l => {
-              const active = (l === 'EN' && lang === 'en') || (l === 'JP' && lang === 'ja');
-              return (
-                <button key={l}
-                  onClick={() => setLang(l === 'EN' ? 'en' : 'ja')}
-                  style={{
-                    ...P, fontSize:12, fontWeight:700, border:'none', cursor:'pointer',
-                    padding:'5px 14px', borderRadius:50,
-                    background: active ? '#fff' : 'transparent',
-                    color: active ? '#3A2518' : '#8B6F5E',
-                    boxShadow: active ? '0 1px 4px rgba(0,0,0,0.15)' : 'none',
-                    transition:'all 0.22s ease',
-                    letterSpacing:'0.04em',
-                  }}
-                >{l}</button>
-              );
-            })}
+          {/* EN / JP iOS segmented pill — hidden per client request */}
+          <div style={{ display: 'none' }}>
+            <div style={{
+              display:'flex', alignItems:'center',
+              background:'rgba(120,100,90,0.10)',
+              borderRadius:50, padding:3,
+              boxShadow:'inset 0 1px 3px rgba(0,0,0,0.10)',
+            }}>
+              {(['EN','JP'] as const).map(l => {
+                const active = (l === 'EN' && lang === 'en') || (l === 'JP' && lang === 'ja');
+                return (
+                  <button key={l}
+                    onClick={() => setLang(l === 'EN' ? 'en' : 'ja')}
+                    style={{
+                      ...P, fontSize:12, fontWeight:700, border:'none', cursor:'pointer',
+                      padding:'5px 14px', borderRadius:50,
+                      background: active ? '#fff' : 'transparent',
+                      color: active ? '#3A2518' : '#8B6F5E',
+                      boxShadow: active ? '0 1px 4px rgba(0,0,0,0.15)' : 'none',
+                      transition:'all 0.22s ease',
+                      letterSpacing:'0.04em',
+                    }}
+                  >{l}</button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Hamburger mobile */}

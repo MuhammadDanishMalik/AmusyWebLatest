@@ -2,10 +2,38 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Wrench, HandCoins } from 'lucide-react';
+import NextImage from 'next/image';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { useLang } from './context/LangContext';
 import { t } from './translations';
+
+/* ─── SHIMMER IMAGE — uses Next.js Image for auto WebP + compression ─── */
+function ShimmerImg({ src, alt, style, className, priority, sizes }: { src: string; alt: string; style?: React.CSSProperties; className?: string; priority?: boolean; sizes?: string }) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      {!loaded && (
+        <div className="shimmer-box" style={{ position: 'absolute', inset: 0, zIndex: 1 }} />
+      )}
+      <NextImage
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes ?? '(max-width: 768px) 100vw, 50vw'}
+        className={className}
+        priority={priority}
+        onLoad={() => setLoaded(true)}
+        style={{
+          objectFit: 'cover',
+          opacity: loaded ? 1 : 0,
+          transition: 'opacity 0.3s ease',
+          ...style,
+        }}
+      />
+    </div>
+  );
+}
 
 
 /* ─── DATA ─── */
@@ -92,7 +120,7 @@ function MachineFan({ machines, tryFree }: { machines: typeof MACHINES; tryFree:
   return (
     <div>
       {/* Linear row — all 4 cards visible side by side with slight tilt */}
-      <div style={{
+      <div className="machine-fan-row" style={{
         display: 'flex',
         alignItems: 'flex-end',
         justifyContent: 'center',
@@ -115,6 +143,7 @@ function MachineFan({ machines, tryFree }: { machines: typeof MACHINES; tryFree:
               onClick={() => setSelected(i)}
               animate={{ rotate: tilt, y: yOff, scale: sc }}
               transition={{ type: 'spring', stiffness: 340, damping: 24 }}
+              className="machine-fan-card"
               style={{
                 width: 230,
                 height: 310,
@@ -204,7 +233,7 @@ function MachineFan({ machines, tryFree }: { machines: typeof MACHINES; tryFree:
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div style={{
+          <div className="spec-panel-grid" style={{
             background: '#FFF0F5',
             border: '2px solid rgba(255,135,196,0.15)',
             borderRadius: 24,
@@ -571,6 +600,7 @@ function HeroFloatingToys() {
       {FALLING_TOYS.map((t, i) => (
         <div
           key={i}
+          className="hero-emoji-fall"
           style={{
             position: 'absolute',
             left: `${t.x}%`,
@@ -916,7 +946,7 @@ export default function Home() {
                   whileHover={{ scale: 1.04, zIndex: 2, transition: { duration: 0.2 } }}
                   style={{ aspectRatio: '1', borderRadius: 16, overflow: 'hidden', boxShadow: 'var(--sh-sm)', background: '#fff' }}
                 >
-                  <img src={img} alt="Prize" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <ShimmerImg src={img} alt="Prize" priority={i < 4} sizes="(max-width: 768px) 50vw, 25vw" />
                 </motion.div>
               ))}
             </div>
@@ -952,11 +982,12 @@ export default function Home() {
               </div>
             </div>
             <motion.div key={revKey} initial={{opacity:0,y:14}} animate={{opacity:1,y:0}} transition={{duration:0.35,ease:[0.16,1,0.3,1]}}
+              className="revenue-img-grid"
               style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,alignItems:'stretch'}}
             >
               {td.imgs.map((img,si)=>(
-                <div key={si} style={{borderRadius:20, overflow:'hidden', boxShadow:'var(--sh-md)', height: 480}}>
-                  <img src={img} alt="Location" style={{width:'100%', height:'100%', objectFit:'cover', display:'block'}} />
+                <div key={si} className="revenue-img-item" style={{borderRadius:20, overflow:'hidden', boxShadow:'var(--sh-md)', height: 480}}>
+                  <ShimmerImg src={img} alt="Location" priority sizes="(max-width: 768px) 100vw, 50vw" />
                 </div>
               ))}
             </motion.div>
@@ -1049,7 +1080,7 @@ export default function Home() {
               <h2 className="h2">{lang === 'ja' ? 'なぜ' : 'Why '}{lang === 'ja' ? 'Amusyなのか？' : 'Amusy?'}</h2>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }} className="grid-2">
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }} className="grid-2 benefits-grid">
               {tx.benefits.items.map((b, i) => (
                 <div key={i} className={`reveal d${(i % 3) + 1}`} style={{
                   padding: '28px 24px',
@@ -1138,7 +1169,7 @@ export default function Home() {
                   whileHover={{scale:1.04,zIndex:2,transition:{duration:0.2}}}
                   style={{aspectRatio:'1',borderRadius:16,overflow:'hidden',boxShadow:'var(--sh-sm)',background:'#fff'}}
                 >
-                  <img src={img} alt="Prize" loading="lazy" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+                  <ShimmerImg src={img} alt="Prize" sizes="(max-width: 768px) 50vw, 25vw" />
                 </motion.div>
               ))}
             </div>
@@ -1153,7 +1184,7 @@ export default function Home() {
                   whileHover={{scale:1.04,zIndex:2,transition:{duration:0.2}}}
                   style={{aspectRatio:'1',borderRadius:16,overflow:'hidden',boxShadow:'var(--sh-sm)',background:'#fff'}}
                 >
-                  <img src={img} alt="Prize" loading="lazy" style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+                  <ShimmerImg src={img} alt="Prize" sizes="(max-width: 768px) 50vw, 25vw" />
                 </motion.div>
               ))}
             </div>
