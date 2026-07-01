@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
     const result = await sendViaResend({
       // "onboarding@resend.dev" works for testing without a custom domain.
       // Once the client verifies their domain on Resend, change this to their own address.
-      from: 'Amusy Contact Form <onboarding@resend.dev>',
+      from: 'Amusy Contact Form <noreply@amusyentertainment.com>',
       to:   [CONTACT_EMAIL],
       reply_to: email,          // hitting Reply goes straight to the lead
       subject: `New Partnership Request - ${name}`,
