@@ -733,6 +733,44 @@ export default function Home() {
   const { lang } = useLang();
   const tx = lang === 'ja' ? t.ja : t.en;
 
+  // ── Contact form state ──
+  const [contactForm, setContactForm] = useState({ name:'', biz:'', email:'', phone:'', address:'', msg:'' });
+  const [contactSending, setContactSending] = useState(false);
+  const [contactSuccess, setContactSuccess] = useState(false);
+  const [contactError, setContactError] = useState<string|null>(null);
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!contactForm.name.trim() || !contactForm.email.trim()) {
+      setContactError('Please fill in your name and email.');
+      return;
+    }
+    setContactSending(true);
+    setContactError(null);
+    setContactSuccess(false);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:    contactForm.name,
+          email:   contactForm.email,
+          phone:   contactForm.phone   || '—',
+          address: contactForm.address || contactForm.biz || '—',
+          questions: contactForm.msg,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Failed to send.');
+      setContactSuccess(true);
+      setContactForm({ name:'', biz:'', email:'', phone:'', address:'', msg:'' });
+    } catch (err: unknown) {
+      setContactError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    } finally {
+      setContactSending(false);
+    }
+  };
+
   useMagnetic(); useReveal();
 
   const go = useCallback((id: string) => {
@@ -1326,26 +1364,68 @@ export default function Home() {
               <h2 className="h2">{lang === 'ja' ? 'お問い合わせ' : "Let's talk."}</h2>
             </div>
             <div className="reveal d1" style={{background:'#fff',border:'1px solid var(--border)',borderRadius:22,padding:'clamp(22px,4vw,42px)',boxShadow:'var(--sh-sm)'}}>
-              <form onSubmit={e=>e.preventDefault()} style={{display:'flex',flexDirection:'column',gap:13}} noValidate>
-                {[
-                  {type:'text',   ph: tx.contact.namePh},
-                  {type:'text',   ph: tx.contact.bizPh},
-                  {type:'email',  ph: tx.contact.emailPh},
-                  {type:'tel',    ph: tx.contact.phonePh},
-                  {type:'text',   ph: tx.contact.addressPh},
-                ].map((f,i)=>(
-                  <input key={i} type={f.type} placeholder={f.ph} style={{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 15px',fontSize:13.5,color:'var(--ink)',outline:'none',width:'100%',...P,transition:'border-color 0.2s'}}
+              <form onSubmit={handleContactSubmit} style={{display:'flex',flexDirection:'column',gap:13}} noValidate>
+                {([
+                  {type:'text',  ph: tx.contact.namePh,    key:'name',    val: contactForm.name},
+                  {type:'text',  ph: tx.contact.bizPh,     key:'biz',     val: contactForm.biz},
+                  {type:'email', ph: tx.contact.emailPh,   key:'email',   val: contactForm.email},
+                  {type:'tel',   ph: tx.contact.phonePh,   key:'phone',   val: contactForm.phone},
+                  {type:'text',  ph: tx.contact.addressPh, key:'address', val: contactForm.address},
+                ] as {type:string;ph:string;key:keyof typeof contactForm;val:string}[]).map((f)=>(
+                  <input
+                    key={f.key}
+                    type={f.type}
+                    placeholder={f.ph}
+                    value={f.val}
+                    onChange={e => setContactForm(prev => ({...prev,[f.key]:e.target.value}))}
+                    style={{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 15px',fontSize:13.5,color:'var(--ink)',outline:'none',width:'100%',...P,transition:'border-color 0.2s',boxSizing:'border-box'}}
                     onFocus={e=>e.currentTarget.style.borderColor='var(--pink)'}
                     onBlur={e=>e.currentTarget.style.borderColor='var(--border)'}
                   />
                 ))}
-                <textarea placeholder={tx.contact.msgPh} rows={4} style={{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 15px',fontSize:13.5,color:'var(--ink)',outline:'none',width:'100%',resize:'vertical',...P,transition:'border-color 0.2s'}}
+                <textarea
+                  placeholder={tx.contact.msgPh}
+                  rows={4}
+                  value={contactForm.msg}
+                  onChange={e => setContactForm(prev=>({...prev,msg:e.target.value}))}
+                  style={{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:12,padding:'12px 15px',fontSize:13.5,color:'var(--ink)',outline:'none',width:'100%',resize:'vertical',...P,transition:'border-color 0.2s',boxSizing:'border-box'}}
                   onFocus={e=>e.currentTarget.style.borderColor='var(--pink)'}
                   onBlur={e=>e.currentTarget.style.borderColor='var(--border)'}
                 />
-                <button type="submit" className="btn btn-dark" style={{width:'100%',padding:'14px',fontSize:14}}>
-                  <span style={{position:'relative',zIndex:1}}>{tx.contact.btn}</span>
+
+                {/* Submit button with spinner */}
+                <button
+                  type="submit"
+                  onClick={handleContactSubmit}
+                  style={{width:'100%',padding:'14px',fontSize:14,background:contactSending?'#e8a8c8':'var(--pink)',color:'#fff',border:'none',borderRadius:12,fontWeight:700,cursor:contactSending?'wait':'pointer',transition:'background 0.2s',display:'flex',alignItems:'center',justifyContent:'center',gap:10,minHeight:50,pointerEvents:'auto',...P}}
+                >
+                  {contactSending ? (
+                    <>
+                      <svg style={{animation:'spin 0.8s linear infinite',flexShrink:0}} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="2.5" strokeLinecap="round"><circle cx="12" cy="12" r="10" strokeDasharray="40 20"/></svg>
+                      <span>Sending…</span>
+                    </>
+                  ) : (
+                    <span style={{position:'relative',zIndex:1}}>{tx.contact.btn}</span>
+                  )}
                 </button>
+
+                {/* Error banner */}
+                {contactError && (
+                  <div style={{...P,background:'#fff0f6',border:'1px solid rgba(255,135,196,0.4)',borderRadius:10,padding:'11px 15px',fontSize:13,color:'#c0005a',display:'flex',alignItems:'center',gap:8,animation:'fadeIn 0.3s ease'}}>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" style={{flexShrink:0}}><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    {contactError}
+                  </div>
+                )}
+
+                {/* Success banner */}
+                {contactSuccess && (
+                  <div style={{...P,background:'linear-gradient(135deg,#fff5fb,#fff)',border:'1.5px solid rgba(255,135,196,0.4)',borderRadius:14,padding:'20px 22px',textAlign:'center',animation:'slideUp 0.4s cubic-bezier(0.16,1,0.3,1)'}}>
+                    <div style={{fontSize:36,marginBottom:6}}>🌸</div>
+                    <div style={{fontSize:15,fontWeight:700,color:'#1C1007',marginBottom:4}}>Message sent!</div>
+                    <div style={{fontSize:13,color:'#4A3728',lineHeight:1.7}}>Thank you! We'll reach out within 24 hours to discuss next steps.</div>
+                  </div>
+                )}
+
                 <p style={{textAlign:'center',fontSize:12,color:'var(--ink3)',...P}}>
                   {tx.contact.emailLabel}{' '}
                   <a href="mailto:info@amusyentertainment.com" style={{color:'var(--pink)',fontWeight:600}}>info@amusyentertainment.com</a>
@@ -1401,6 +1481,9 @@ export default function Home() {
 
       <style>{`
         input::placeholder,textarea::placeholder{color:var(--ink3)}
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes slideUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeIn  { from{opacity:0} to{opacity:1} }
         .footer-cols{display:grid}
         /* Logo ticker slide */
         @keyframes logoSlide { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
