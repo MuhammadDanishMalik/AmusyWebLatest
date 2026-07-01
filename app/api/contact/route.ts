@@ -9,7 +9,7 @@ import { request as httpsRequest } from 'https';
 //
 //  Put these in .env.local in the project root — never commit that file.
 // ─────────────────────────────────────────────────────────────────────────────
-const CONTACT_EMAIL  = process.env.CONTACT_EMAIL  ?? 'danishawan.one@gmail.com';
+const CONTACT_EMAIL  = process.env.CONTACT_EMAIL  ?? 'info@amusyentertainment.com';
 const RESEND_API_KEY = process.env.RESEND_API_KEY ?? '';
 
 function escHtml(str: string) {
